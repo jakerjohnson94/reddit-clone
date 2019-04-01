@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     "redditclone",
     "redditclone.RedditUser",
     "redditclone.Subreddit",
-    "redditclone.Post",
+    "redditclone.MainPost",
     "redditclone.Vote",
-    "redditclone.Comment"
+    "redditclone.PostComment",
 ]
 
 MIDDLEWARE = [

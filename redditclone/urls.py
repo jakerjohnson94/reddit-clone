@@ -17,14 +17,14 @@ from django.contrib import admin
 from django.urls import path
 from redditclone.RedditUser.models import RedditUser
 from redditclone.Subreddit.models import Subreddit
-from redditclone.Post.models import Post
+from redditclone.MainPost.models import MainPost
 from redditclone.Vote.models import Vote
-from redditclone.Comment.models import Comment
+from redditclone.PostComment.models import PostComment
 
 admin.site.register(RedditUser)
 admin.site.register(Subreddit)
-admin.site.register(Comment)
-admin.site.register(Post)
+admin.site.register(PostComment)
+admin.site.register(MainPost)
 admin.site.register(Vote)
 
 urlpatterns = [path("admin/", admin.site.urls)]
