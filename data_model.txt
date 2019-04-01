@@ -1,0 +1,6 @@
+RedditUser(ID, username, password, email, 
+Subreddit(ID, name, description, sidebar_content, created_at, subscribers, moderators,
+Post(ID, title, created_at, is_link, body, subreddit_id, poster_id, is_new_thread, is_parent_post
+Vote(ID, user, type, post )
+
+
