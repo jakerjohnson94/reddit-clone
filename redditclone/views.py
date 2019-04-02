@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 from Thread.models import Thread
 from ThreadComment.models import ThreadComment
 from RedditUser.models import RedditUser

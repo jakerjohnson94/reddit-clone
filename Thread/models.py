@@ -6,7 +6,7 @@ from Vote.models import Vote
 
 class Thread(models.Model):
     title = models.CharField("Title", max_length=50)
-    is_link_post = models.BooleanField("Is a Link Post?")
+    is_link_post = models.BooleanField("Is the Post a link?")
     body = models.CharField("Body", max_length=500, blank=True, null=True)
     link = models.URLField("Link URL", max_length=200, blank=True, null=True)
     sender = models.ForeignKey(
@@ -18,4 +18,4 @@ class Thread(models.Model):
     votes = models.ManyToManyField(Vote, verbose_name="Votes", blank=True)
 
     def __str__(self):
-        return f" {self.subreddit} - {self.title}"
+        return f"{self.subreddit} - {self.title}"
