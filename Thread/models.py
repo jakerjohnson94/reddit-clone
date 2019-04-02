@@ -1,10 +1,10 @@
 from django.db import models
-from redditclone.RedditUser.models import RedditUser
-from redditclone.Subreddit.models import Subreddit
-from redditclone.Vote.models import Vote
+from RedditUser.models import RedditUser
+from Subreddit.models import Subreddit
+from Vote.models import Vote
 
 
-class MainPost(models.Model):
+class Thread(models.Model):
     title = models.CharField("Title", max_length=50)
     is_link_post = models.BooleanField("Is a Link Post?")
     body = models.CharField("Body", max_length=500, blank=True, null=True)

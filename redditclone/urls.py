@@ -15,16 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from redditclone.RedditUser.models import RedditUser
-from redditclone.Subreddit.models import Subreddit
-from redditclone.MainPost.models import MainPost
-from redditclone.Vote.models import Vote
-from redditclone.PostComment.models import PostComment
+from RedditUser.models import RedditUser
+from Subreddit.models import Subreddit
+from Thread.models import Thread
+from Vote.models import Vote
+from ThreadComment.models import ThreadComment
+from .views import Homepage
+
 
 admin.site.register(RedditUser)
 admin.site.register(Subreddit)
-admin.site.register(PostComment)
-admin.site.register(MainPost)
+admin.site.register(ThreadComment)
+admin.site.register(Thread)
 admin.site.register(Vote)
 
-urlpatterns = [path("admin/", admin.site.urls)]
+urlpatterns = [path("admin/", admin.site.urls), path("", Homepage.as_view())]

@@ -38,11 +38,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "redditclone",
-    "redditclone.RedditUser",
-    "redditclone.Subreddit",
-    "redditclone.MainPost",
-    "redditclone.Vote",
-    "redditclone.PostComment",
+    "RedditUser",
+    "Subreddit",
+    "Thread",
+    "Vote",
+    "ThreadComment",
 ]
 
 MIDDLEWARE = [

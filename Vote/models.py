@@ -1,9 +1,8 @@
 from django.db import models
-from redditclone.RedditUser.models import RedditUser
-from redditclone.Subreddit.models import Subreddit
+from RedditUser.models import RedditUser
+from Subreddit.models import Subreddit
 
 
-# Vote(ID, user, type, post )
 STATUS_CHOICES = ((1, "Upvote"), (2, "Downvote"))
 
 
@@ -14,5 +13,5 @@ class Vote(models.Model):
     vote_type = models.IntegerField("Type", choices=STATUS_CHOICES)
 
     def __str__(self):
-        return f"{self.user}"
+        return f"{self.user} - {self.vote_type}"
 

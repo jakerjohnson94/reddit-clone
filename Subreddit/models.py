@@ -1,5 +1,5 @@
 from django.db import models
-from redditclone.RedditUser.models import RedditUser
+from RedditUser.models import RedditUser
 
 # Subreddit(ID, name, description, sidebar_content, created_at, subscribers, moderators,
 class Subreddit(models.Model):
