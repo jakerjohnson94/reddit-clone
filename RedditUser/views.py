@@ -9,6 +9,8 @@ from RedditUser.models import RedditUser
 from Subreddit.models import Subreddit
 from Vote.models import Vote
 from RedditUser.forms import LoginForm
+from django.views import View
+from django.http import HttpResponseRedirect
 
 
 def login_view(request):
@@ -27,3 +29,8 @@ def login_view(request):
     else:
         form = LoginForm()
     return render(request, html, {"form": form})
+
+
+def logout_action(request):
+    logout(request)
+    return redirect(request.GET.get("next", "/"))
