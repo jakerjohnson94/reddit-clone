@@ -9,6 +9,7 @@ class Thread(models.Model):
     is_link_post = models.BooleanField("Is the Post a link?")
     body = models.CharField("Body", max_length=500, blank=True, null=True)
     link = models.URLField("Link URL", max_length=200, blank=True, null=True)
+    created_at = models.DateTimeField("Created At", auto_now=True)
     sender = models.ForeignKey(
         RedditUser, verbose_name="Sender", on_delete=models.CASCADE
     )

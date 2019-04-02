@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 
-TEMPLATE_DIRS = (os.path.join(SETTINGS_PATH, "templates"),)
+# TEMPLATE_DIRS = (os.path.join(SETTINGS_PATH, "templates"),)
 
 
 # Quick-start development settings - unsuitable for production
@@ -65,7 +65,7 @@ ROOT_URLCONF = "redditclone.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": ["templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

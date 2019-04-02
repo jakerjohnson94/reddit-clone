@@ -16,7 +16,10 @@ admin.site.register(ThreadComment)
 admin.site.register(Thread)
 admin.site.register(Vote)
 
-urlpatterns = [path("admin/", admin.site.urls), path("", homepage)]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", homepage, name="homepage"),
+]
 
 urlpatterns += reddit_user_urls
 urlpatterns += subbredit_urls
