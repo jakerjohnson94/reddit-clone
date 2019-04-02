@@ -3,15 +3,12 @@ from django.urls import path
 from .views import home_view
 
 
-urlpatterns = [
-    path("subreddit/<int:subreddit_id>", home_view, name="subreddit_home")
-]
+urlpatterns = [path("r/<str:subreddit_name>", home_view, name="subreddit")]
 
-# subreddit/<int:id>
-# subreddit/<int:id>/post
-# subreddit/<int:id>/subscribe
-# subreddit/<int:id>/unsubscribe
+# r/<int:id>/subscribe
+# r/<int:id>/unsubscribe
 
-# subreddit/<int:id>create
-# subreddit/<int:id>/delete
-# subreddit/<int:id>/edit
+# r/<int:id>/post
+# r/<int:id>create
+# r/<int:id>/delete
+# r/<int:id>/edit

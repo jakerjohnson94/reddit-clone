@@ -1,59 +1,52 @@
 {% include "head.html" %} {% include 'header.html' %}
-<div class="container">
+<div style="margin: 5em">
   <!-- Title -->
   <div class="row">
-    <h2 class="title">
+    <h4 class="title">
       {{ subreddit.name }}
-    </h2>
+    </h4>
   </div>
 
   <!-- Description -->
   <div class="row">
-    Description:
-    <br />
-    {{ subreddit.description }}
+    <div class="col s right">
+      <h5>Info:</h5>
+      <p>{{ subreddit.description }}</p>
+    </div>
+
+    <!-- Thread List -->
+
+    <div class="col s8">
+      {% for thread in threads %} {% include 'thread_card.html' %} {% endfor %}
+    </div>
   </div>
 
-  <!-- Thread List -->
-  <div class="row">
-    <div class="col s9">
-      {% for thread in threads %}
-      <div class="card">
-        <div style="padding: .25em">
-          <h5>{{ thread.title }}</h5>
-          <p>Posted by: {{ thread.sender.user.username }}</p>
-          <p>{{ thread.created_at }}</p>
-        </div>
+  <!-- Sidebar
+    <div class="row">
+      <div class="col right">
+        <p>Important Links:</p>
+        <p>{{ subreddit.sidebar }}</p>
       </div>
-      {% endfor %}
     </div>
-
-    <!-- Sidebar Content -->
-    <div class="col sidebar">
-      {{ subreddit.sidebar }}
-    </div>
-  </div>
-
+     -->
   <!-- Subscribers -->
   <div class="row">
-    <div class="right">
+    <div class="col s2 right">
       <h5>Subscribers:</h5>
       {% for subscriber in subscribers %}
-      <p>{{ subscriber.user.username }}</p>
+      <p>{{ subscriber.user.username | title }}</p>
       {% endfor %}
     </div>
   </div>
 
   <!-- Moderators -->
   <div class="row">
-    <div class="right">
+    <div class="col s2 right">
       <h5>Moderators:</h5>
       {% for moderator in moderators %}
-      <p>{{ moderator.user.username }}</p>
+      <p>{{ moderator.user.username | title }}</p>
       {% endfor %} {% if is_moderator %}
       <p class="right grey-text">You are a moderator</p>
-      {% else %}
-      <p>You are not a moderator, scrub</p>
       {% endif %}
     </div>
   </div>
