@@ -1,0 +1,18 @@
+{% include 'head.html' %} {% include 'header.html' %}
+<div class="container">
+  {% include 'thread_detail.html' %}
+
+  <div class="row">
+    <div class="divider"></div>
+  </div>
+
+  <div class="row">
+    <a href="{% url 'postcomment' thread.id %}" class="white-text">
+      <button class="btn grey">Post Comment</button>
+    </a>
+  </div>
+
+  {% for comment in comments %} {% include 'single_comment.html' %}
+  <div class="divider"></div>
+  {% endfor %}
+</div>

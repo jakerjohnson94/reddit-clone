@@ -1,28 +1,21 @@
 <div class="card">
   <div class="card-content">
-    <div style="padding: .25em" class="row">
-      <div class="col">
-        <h5>
-          <a href="{% url 'threaddetail' thread.id %}"> {{ thread.title | title }}</a>
-        </h5>
-      </div>
-    </div>
-    <div class="row" style="margin-top: -1em">
-      <div class="col s">
-        <p class="blue-text">{{ thread.sender.user.username | title }}</p>
-      </div>
-      <div class="col s">
-        <p>
-          <a href="{% url 'subreddit' thread.subreddit.name %}">
-            /r/{{ thread.subreddit.name | title }}/
-          </a>
-        </p>
-      </div>
-    </div>
-    <div class="row" style="margin-top: -1em">
-      <div class="col s">
-        <p class="grey-text">{{ thread.created_at }}</p>
-      </div>
-    </div>
+    <h5>
+      <a href="{% url 'threaddetail' thread.id %}"> {{ thread.title | title }}</a>
+    </h5>
+
+    <p class="grey-text">
+      {{ thread.created_at }}
+      by <b>{{ thread.sender.user.username | title }}</b> in
+      <a href="{% url 'subreddit' thread.subreddit.name %}">
+        /r/{{ thread.subreddit.name | title }}/
+      </a>
+    </p>
+
+    {% if thread.is_link_post %}
+    <p>{{ thread.link | truncatechars:20 }}</p>
+    {% else %}
+    <p>{{ thread.body | truncatechars:50 }}</p>
+    {% endif %}
   </div>
 </div>

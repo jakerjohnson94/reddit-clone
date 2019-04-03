@@ -29,3 +29,16 @@ def post_comment(request, thread_id):
 
     return render(request, html, {"form": form})
 
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(ThreadComment, pk=comment_id)
+    thread = comment.post_thread
+    subreddit = thread.subreddit
+    is_moderator = subreddit.moderators.filter(user=request.user).exists()
+    is_own_post = comment.sender.user is request.user
+    if is_moderator or is_own_post:
+        comment.delete()
+    else:
+        return HttpResponseForbidden()
+    return redirect("subreddit", subreddit.name)

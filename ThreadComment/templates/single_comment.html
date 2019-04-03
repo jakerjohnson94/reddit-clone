@@ -1,0 +1,11 @@
+<p>{{ comment.sender.user.username | title }}</p>
+<p class="grey-text">{{ comment.created_at }}</p>
+<p>{{ comment.body }}</p>
+{% if is_moderator or is_own_post %}
+<a href="{% url 'deleteComment' comment.id %}">
+  <div class="row valign-wrapper">
+    <i class="material-icons grey-text">close</i>
+    <button class="btn-flat white grey-text" style="text-transform:none">Delete Comment</button>
+  </div>
+</a>
+{% endif %}

@@ -6,7 +6,8 @@ from django.contrib.auth.decorators import login_required
 from Thread.models import Thread
 from ThreadComment.models import ThreadComment
 from RedditUser.models import RedditUser
-from Subreddit.models import Subreddit
+from .models import Subreddit
+from .forms import CreateSubredditForm
 from Vote.models import Vote
 from RedditUser.forms import LoginForm
 from django.views import View
@@ -46,6 +47,31 @@ def home_view(request, subreddit_name):
     return render(request, html, data)
 
 
+def create_new_view(request):
+    html = "subreddit_create.html"
+    form = None
+    if request.method == "POST":
+        form = CreateSubredditForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            description = form.cleaned_data["description"]
+            sidebar_content = form.cleaned_data["sidebar_content"]
+            reddit_user = get_object_or_404(RedditUser, user=request.user)
+            new_subreddit = Subreddit(
+                name=name,
+                description=description,
+                sidebar_content=sidebar_content,
+                created_by=reddit_user,
+            )
+            new_subreddit.save()
+            new_subreddit.moderators.set([reddit_user])
+            return redirect("subreddit", new_subreddit.name)
+    else:
+        form = CreateSubredditForm()
+
+    return render(request, html, {"form": form})
+
+
 def unsubscribe(request, subreddit_name):
     subreddit = get_object_or_404(Subreddit, name=subreddit_name)
     try:
@@ -58,8 +84,8 @@ def unsubscribe(request, subreddit_name):
 
 def subscribe(request, subreddit_name):
     subreddit = get_object_or_404(Subreddit, name=subreddit_name)
+    reddit_user = get_object_or_404(RedditUser, user=request.user)
     try:
-        reddit_user = RedditUser.objects.get(user=request.user)
         subreddit.subscribers.add(reddit_user)
     except Exception as e:
         print(e)

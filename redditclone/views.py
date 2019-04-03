@@ -12,7 +12,7 @@ from Vote.models import Vote
 @login_required
 def homepage(request):
     html = "index.html"
-    threads = Thread.objects.all()[:25]
+    threads = Thread.objects.all().order_by("-created_at")[:25]
     data = {"threads": threads}
     return render(request, html, data)
 

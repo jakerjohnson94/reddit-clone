@@ -5,7 +5,12 @@
     <h4 class="title">
       {{ subreddit.name | title }}
     </h4>
+  </div>
 
+  <div class="row">
+    <em>{{ subreddit.description }}</em>
+  </div>
+  <div class="row">
     <div class="divider"></div>
   </div>
 
@@ -40,11 +45,12 @@
         </a>
         {% endif %}
       </div>
-      <div class="row">
-        <h5>Subreddit Info:</h5>
-        <p>{{ subreddit.description }}</p>
-      </div>
 
+      <!-- Sidebar Info -->
+      <div class="row">
+        <h5>Useful Content:</h5>
+        <p>{{ subreddit.sidebar_content | default_if_none:'Nothing Here Yet...' }}</p>
+      </div>
       <!-- Subscribers -->
       <div class="row">
         <h5>Subscribers:</h5>

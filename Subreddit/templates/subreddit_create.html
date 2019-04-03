@@ -1,9 +1,9 @@
 {% include 'head.html' %} {% include 'header.html' %}
 <div class="container">
-  <h2>New {{ post_type | title }} Post</h2>
+  <h2>Create a New Subreddit</h2>
   <form class="form" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button class="btn grey" type="submit">Post</button>
+    <button class="btn grey" type="submit">Create</button>
   </form>
 </div>
