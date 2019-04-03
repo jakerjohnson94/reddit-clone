@@ -3,21 +3,32 @@
   <!-- Title -->
   <div class="row">
     <h4 class="title">
-      {{ subreddit.name }}
+      {{ subreddit.name | title }}
     </h4>
   </div>
 
+  <!-- Subscribe Buttons -->
+
+  {% if is_subscriber %}
+  <button class="btn grey">
+    <a href="{% url 'unsubscribe' subreddit.name %}" class="white-text">Unsubscribe</a>
+  </button>
+  {% else %}
+  <button class="btn grey">
+    <a href="{% url 'subscribe' subreddit.name %}" class="white-text">Subscribe</a>
+  </button>
+  {% endif %}
+
   <!-- Description -->
   <div class="row">
-    <div class="col s right">
-      <h5>Info:</h5>
-      <p>{{ subreddit.description }}</p>
-    </div>
-
     <!-- Thread List -->
-
     <div class="col s8">
       {% for thread in threads %} {% include 'thread_card.html' %} {% endfor %}
+    </div>
+
+    <div class="col  s2 right">
+      <h5>Info:</h5>
+      <p>{{ subreddit.description }}</p>
     </div>
   </div>
 

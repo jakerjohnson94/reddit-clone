@@ -1,0 +1,12 @@
+{% include 'head.html' %} {% include 'header.html' %}
+<div class="container">
+  <h4>All Subreddits</h4>
+  <div class="divider"></div>
+  <ul class="collection">
+    {% for subreddit in subreddits %}
+    <li class="collection-item">
+      <a href="{% url 'subreddit' subreddit.name %}"> r/{{ subreddit.name | title }}/ </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>

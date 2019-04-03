@@ -1,9 +1,15 @@
 <div style="margin-right: 1em; margin-left: 1em">
   <div class="row">
-    <button class="btn grey"><a class="white-text" href="{% url 'homepage' %}">Home</a></button>
+    <a class="white-text" href="{% url 'homepage' %}"><button class="btn grey">Home</button></a>
+    <a class="white-text" href="{% url 'allsubs' %}">
+      <button class="btn grey">
+        All Subreddits
+      </button>
+    </a>
+
     <div class="right">
       {% if user %} {% include 'logout_button.html' %} {% else %}
-      <button class="btn grey"><a class="white-text" href="{% url 'signup' %}">Signup</a></button>
+      <a class="white-text" href="{% url 'signup' %}"><button class="btn grey">Signup</button></a>
       {% endif %}
     </div>
   </div>

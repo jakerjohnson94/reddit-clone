@@ -15,3 +15,4 @@ def homepage(request):
     threads = Thread.objects.all()[:25]
     data = {"threads": threads}
     return render(request, html, data)
+

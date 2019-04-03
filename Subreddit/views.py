@@ -13,8 +13,11 @@ from django.views import View
 from django.http import HttpResponseRedirect
 
 
-def unsubscribe(request, subreddit_name):
-    subreddit = get_object_or_404(Subreddit, name=subreddit_name)
+def list_all_view(request):
+    html = "subreddit_list.html"
+    subreddits = Subreddit.objects.all()
+    data = {"subreddits": subreddits}
+    return render(request, html, data)
 
 
 def home_view(request, subreddit_name):
@@ -41,3 +44,23 @@ def home_view(request, subreddit_name):
         "is_moderator": is_moderator,
     }
     return render(request, html, data)
+
+
+def unsubscribe(request, subreddit_name):
+    subreddit = get_object_or_404(Subreddit, name=subreddit_name)
+    try:
+        reddit_user = RedditUser.objects.get(user=request.user)
+        subreddit.subscribers.remove(reddit_user)
+    except Exception as e:
+        print(e)
+    return redirect("subreddit", subreddit_name)
+
+
+def subscribe(request, subreddit_name):
+    subreddit = get_object_or_404(Subreddit, name=subreddit_name)
+    try:
+        reddit_user = RedditUser.objects.get(user=request.user)
+        subreddit.subscribers.add(reddit_user)
+    except Exception as e:
+        print(e)
+    return redirect("subreddit", subreddit_name)
