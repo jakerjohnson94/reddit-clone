@@ -10,11 +10,12 @@ class ThreadComment(models.Model):
     sender = models.ForeignKey(
         RedditUser, verbose_name="Sender", on_delete=models.CASCADE
     )
+    created_at = models.DateTimeField("Created At", auto_now=True)
     post_thread = models.ForeignKey(
         Thread, verbose_name="Parent Thread", on_delete=models.CASCADE
     )
     votes = models.ManyToManyField(Vote, verbose_name="Votes", blank=True)
-    created_at = models.DateTimeField("Created At", auto_now=True)
+    score = models.IntegerField("Vote Score", blank=True, null=True)
 
     def __str__(self):
         return f"{self.post_thread} - #{self.id}"

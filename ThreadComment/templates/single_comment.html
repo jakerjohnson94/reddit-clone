@@ -1,6 +1,13 @@
-<p>{{ comment.sender.user.username | title }}</p>
-<p class="grey-text">{{ comment.created_at }}</p>
-<p>{{ comment.body }}</p>
+<div class="row">
+  <div class="col">
+    {% include 'comment_vote_arrows.html' %}
+  </div>
+  <div class="col">
+    <p>{{ comment.sender.user.username | title }}</p>
+    <p class="grey-text">{{ comment.created_at }}</p>
+    <p>{{ comment.body }}</p>
+  </div>
+</div>
 {% if is_moderator or is_own_post %}
 <a href="{% url 'deleteComment' comment.id %}">
   <div class="row valign-wrapper">
