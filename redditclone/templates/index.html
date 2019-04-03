@@ -2,6 +2,10 @@
 <div class="container">
   <h4>Hello {{ user.username | title }}</h4>
 
+  {% if has_upvoted %}
+  <h2>VOTED</h2>
+  {% endif %}
+
   <div class="divider"></div>
   <div class="row">
     <h5>Top Posts:</h5>

@@ -9,7 +9,7 @@ class Thread(models.Model):
     is_link_post = models.BooleanField("Is the Post a link?")
     body = models.CharField("Body", max_length=500, blank=True, null=True)
     link = models.URLField("Link URL", max_length=200, blank=True, null=True)
-    created_at = models.DateTimeField("Created At", auto_now=True)
+    created_at = models.DateTimeField("Created At", auto_now_add=True)
     sender = models.ForeignKey(
         RedditUser, verbose_name="Sender", on_delete=models.CASCADE
     )
@@ -17,6 +17,7 @@ class Thread(models.Model):
         Subreddit, verbose_name="Subreddit", on_delete=models.CASCADE
     )
     votes = models.ManyToManyField(Vote, verbose_name="Votes", blank=True)
+    score = models.IntegerField("Vote Score", blank=True, null=True)
 
     def __str__(self):
         return f"{self.subreddit} - {self.title}"

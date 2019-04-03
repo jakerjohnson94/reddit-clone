@@ -4,7 +4,7 @@ from Subreddit.models import Subreddit
 
 
 class Vote(models.Model):
-    VOTE_CHOICES = ((1, "Upvote"), (-1, "Downvote"))
+    VOTE_CHOICES = ((1, "Upvote"), (2, "Downvote"))
 
     user = models.ForeignKey(
         RedditUser, verbose_name="User", on_delete=models.CASCADE

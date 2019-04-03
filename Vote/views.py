@@ -8,27 +8,26 @@ from Subreddit.models import Subreddit
 from .models import Vote
 
 
+def get_vote_score(votes):
+    score = 0
+    for vote in votes:
+        if vote.vote_type == 1:
+            score += 1
+        elif vote.vote_type == 2:
+            score -= 1
+    return score
+
+
 def thread_vote(request, thread_id, vote_type):
     thread = get_object_or_404(Thread, pk=thread_id)
     reddit_user = get_object_or_404(RedditUser, user=request.user)
-    user_vote = thread.votes.filter(user__user=request.user)
-    has_upvoted = False
-    has_downvoted = False
+    user_vote = thread.votes.filter(user=reddit_user)
     if user_vote.exists():
-        if user_vote[0].vote_type == 1:
-            has_upvoted = True
-        elif user_vote[0].vote_type == 2:
-            has_downvoted = True
+        user_vote.delete()
     else:
         vote = Vote(user=reddit_user, vote_type=vote_type)
         vote.save()
         thread.votes.set([vote])
-
-    return redirect(
-        "/",
-        {
-            "has_upvoted": has_upvoted,
-            "has_downvoted": has_downvoted,
-            "thread": thread,
-        },
-    )
+    thread.score = get_vote_score(thread.votes.all())
+    thread.save()
+    return redirect("/")
