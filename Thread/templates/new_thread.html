@@ -1,0 +1,9 @@
+{% include "head.html" %}
+<div class="container">
+  <h2>New {{ post_type | title }} Post</h2>
+  <form class="form" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Post</button>
+  </form>
+</div>

@@ -15,7 +15,7 @@ from django.http import HttpResponseRedirect
 
 def list_all_view(request):
     html = "subreddit_list.html"
-    subreddits = Subreddit.objects.all()
+    subreddits = Subreddit.objects.all().order_by("name")
     data = {"subreddits": subreddits}
     return render(request, html, data)
 
@@ -23,7 +23,7 @@ def list_all_view(request):
 def home_view(request, subreddit_name):
     html = "subreddit_homepage.html"
     subreddit = get_object_or_404(Subreddit, name=subreddit_name)
-    threads = Thread.objects.filter(subreddit=subreddit)
+    threads = Thread.objects.filter(subreddit=subreddit).order_by("-created_at")
 
     if subreddit.moderators.filter(user=request.user).exists():
         is_moderator = True

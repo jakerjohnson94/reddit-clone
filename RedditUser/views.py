@@ -1,5 +1,3 @@
-from django.views.generic import TemplateView
-from django.views.generic.edit import FormView
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
@@ -10,7 +8,6 @@ from Subreddit.models import Subreddit
 from Vote.models import Vote
 from RedditUser.forms import LoginForm
 from django.views import View
-from django.http import HttpResponseRedirect
 
 
 def login_view(request):
@@ -25,7 +22,7 @@ def login_view(request):
             )
             if user is not None:
                 login(request, user)
-                return redirect(request.GET.get("next", "/"))
+                return redirect("/")
     else:
         form = LoginForm()
     return render(request, html, {"form": form})

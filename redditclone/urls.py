@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from RedditUser.urls import urlpatterns as reddit_user_urls
 from Subreddit.urls import urlpatterns as subbredit_urls
-
+from Thread.urls import urlpatterns as thread_urls
 from Thread.models import Thread
 from ThreadComment.models import ThreadComment
 from RedditUser.models import RedditUser
@@ -23,3 +23,4 @@ urlpatterns = [
 
 urlpatterns += reddit_user_urls
 urlpatterns += subbredit_urls
+urlpatterns += thread_urls
