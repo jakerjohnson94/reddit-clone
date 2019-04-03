@@ -14,6 +14,7 @@ class ThreadComment(models.Model):
         Thread, verbose_name="Parent Thread", on_delete=models.CASCADE
     )
     votes = models.ManyToManyField(Vote, verbose_name="Votes", blank=True)
+    created_at = models.DateTimeField("Created At", auto_now=True)
 
     def __str__(self):
         return f"{self.post_thread} - #{self.id}"

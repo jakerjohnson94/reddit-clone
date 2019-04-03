@@ -10,6 +10,15 @@ from Vote.models import Vote
 from django.views import View
 
 
+def thread_detail_view(request, thread_id):
+    html = "thread_detail.html"
+    thread = get_object_or_404(Thread, pk=thread_id)
+    comments = ThreadComment.objects.filter(post_thread=thread).order_by(
+        "-created_at"
+    )
+    return render(request, html, {"thread": thread, "comments": comments})
+
+
 def new_thread_view(request, subreddit_name, post_type):
     html = "new_thread.html"
     form = None
@@ -41,9 +50,9 @@ def new_thread_view(request, subreddit_name, post_type):
             return redirect("subreddit", subreddit_name)
     else:
         if post_type == "text":
-            form = TextThreadForm(request.POST)
+            form = TextThreadForm()
         elif post_type == "link":
-            form = LinkThreadForm(request.POST)
+            form = LinkThreadForm()
 
     return render(request, html, {"form": form, "post_type": post_type})
 

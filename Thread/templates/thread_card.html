@@ -2,7 +2,9 @@
   <div class="card-content">
     <div style="padding: .25em" class="row">
       <div class="col">
-        <h5>{{ thread.title | title }}</h5>
+        <h5>
+          <a href="{% url 'threaddetail' thread.id %}"> {{ thread.title | title }}</a>
+        </h5>
       </div>
     </div>
     <div class="row" style="margin-top: -1em">

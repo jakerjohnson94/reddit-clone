@@ -1,0 +1,32 @@
+{% include 'head.html' %} {% include 'header.html' %}
+<div class="container">
+  <h4>{{ thread.title | title }}</h4>
+  <p class="grey-text">{{ thread.created_at }}</p>
+  <em class="grey-text">
+    in <a href="{% url 'subreddit' thread.subreddit.name %}">r/{{ thread.subreddit.name }}/</a> by
+    {{ thread.sender.user.username | title }}
+  </em>
+
+  {% if thread.is_link_post %}
+  <p>
+    <a href="{{ thread.link }}">{{ thread.link }}</a>
+  </p>
+  {% else %}
+  <p>{{ thread.body }}</p>
+
+  {% endif %}
+  <div class="row">
+    <div class="divider"></div>
+  </div>
+  <div class="row">
+    <a href="{% url 'postcomment' thread.id %}" class="white-text">
+      <button class="btn grey">Post Comment</button>
+    </a>
+  </div>
+  {% for comment in comments %}
+  <p>{{ comment.sender.user.username | title }}</p>
+  <p class="grey-text">{{ comment.created_at }}</p>
+  <p>{{ comment.body }}</p>
+  <div class="divider"></div>
+  {% endfor %}
+</div>
