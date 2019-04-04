@@ -16,19 +16,22 @@ class Thread(models.Model):
     subreddit = models.ForeignKey(
         Subreddit, verbose_name="Subreddit", on_delete=models.CASCADE
     )
-    votes = models.ManyToManyField(Vote, verbose_name="Votes", blank=True)
     score = models.IntegerField("Vote Score", blank=True, null=True)
+    upvoters = models.ManyToManyField(
+        RedditUser, verbose_name="Upvoters", related_name="upvoters", blank=True
+    )
+    downvoters = models.ManyToManyField(
+        RedditUser,
+        verbose_name="Downvoters",
+        related_name="downvoters",
+        blank=True,
+    )
 
     def __str__(self):
         return f"{self.subreddit} - {self.title}"
 
     def set_score(self):
-        score = 0
-        for vote in self.votes.all():
-            if vote.vote_type == 1:
-                score += 1
-            elif vote.vote_type == 2:
-                score -= 1
-        self.score = score
-        return score
+        self.score = len(self.upvoters.all()) - len(self.downvoters.all())
 
+    # def flag_user_upvote(self, request):
+    #     user_vote = self.upvoters.get(user=request.user)

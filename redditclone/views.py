@@ -17,6 +17,11 @@ def homepage(request):
     #     subscriptions = Subreddit.subscribers.filter(user=reddit_user)
     #     print(subscriptions)
     threads = Thread.objects.all().order_by("-score")[:25]
+    for thread in threads:
+        if thread.upvoters.filter(user=request.user).exists():
+            thread.has_upvoted = True
+        elif thread.downvoters.filter(user=request.user).exists():
+            thread.has_downvoted = True
     data = {"threads": threads}
     return render(request, html, data)
 
