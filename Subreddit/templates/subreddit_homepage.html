@@ -30,43 +30,48 @@
       {% for thread in threads %} {% include 'thread_card.html' %} {% endfor %}
     </div>
 
-    <div class="col  s2 right">
+    <div class="col  s right">
       <!-- Subscribe Buttons -->
       <div class="row">
-        {% if is_subscriber %}
-        <button class="btn grey">
-          <a href="{% url 'unsubscribe' subreddit.name %}" class="white-text">Unsubscribe</a>
-        </button>
-        {% else %}
-        <a href="{% url 'subscribe' subreddit.name %}" class="white-text">
-          <button class="btn grey">
-            Subscribe
-          </button>
-        </a>
-        {% endif %}
-      </div>
+        <div class="card">
+          <div class="card-content">
+          <div class='row center'>
+            {% if is_subscriber %}
+            <button class="btn grey">
+              <a href="{% url 'unsubscribe' subreddit.name %}" class="white-text">Unsubscribe</a>
+            </button>
+            {% else %}
+            <a href="{% url 'subscribe' subreddit.name %}" class="white-text">
+              <button class="btn grey">
+                Subscribe
+              </button>
+            </a>
+            {% endif %}
+            </div>
 
-      <!-- Sidebar Info -->
-      <div class="row">
-        <h5>Useful Content:</h5>
-        <p>{{ subreddit.sidebar_content | default_if_none:'Nothing Here Yet...' }}</p>
-      </div>
-      <!-- Subscribers -->
-      <div class="row">
-        <h5>Subscribers:</h5>
-        {% for subscriber in subscribers %}
-        <p>{{ subscriber.user.username | title }}</p>
-        {% endfor %}
-      </div>
+          <!-- Sidebar Info -->
+          <div class="row">
+            <p class="card-title">Useful Content:</p>
+            <p>{{ subreddit.sidebar_content | default_if_none:'Nothing Here Yet...' }}</p>
+          </div>
+          <!-- Subscribers -->
+          <div class="row">
+            <p class="card-title">Subscribers:</p>
+            {% for subscriber in subscribers %}
+            <p>{{ subscriber.user.username | title }}</p>
+            {% endfor %}
+          </div>
 
-      <!-- Moderators -->
-      <div class="row">
-        <h5>Moderators:</h5>
-        {% for moderator in moderators %}
-        <p>{{ moderator.user.username | title }}</p>
-        {% endfor %} {% if is_moderator %}
-        <p class="grey-text">You are a moderator</p>
-        {% endif %}
+          <!-- Moderators -->
+          <div class="row">
+            <p class="card-title">Moderators:</p>
+            {% for moderator in moderators %}
+            <p>{{ moderator.user.username | title }}</p>
+            {% endfor %} {% if is_moderator %}
+            <p class="grey-text">You are a moderator</p>
+            {% endif %}
+          </div>
+        </div>
       </div>
     </div>
   </div>

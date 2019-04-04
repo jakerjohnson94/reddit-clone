@@ -90,3 +90,4 @@ def subscribe(request, subreddit_name):
     except Exception as e:
         print(e)
     return redirect("subreddit", subreddit_name)
+

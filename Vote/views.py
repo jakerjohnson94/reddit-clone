@@ -18,7 +18,7 @@ def thread_vote(request, thread_id, vote_type):
     else:
         vote = Vote(user=reddit_user, vote_type=vote_type)
         vote.save()
-        thread.votes.set([vote])
+        thread.votes.add(vote)
     thread.score = get_vote_score(thread.votes.all())
     thread.save()
     return redirect("/")
@@ -34,7 +34,7 @@ def comment_vote(request, comment_id, vote_type):
     else:
         vote = Vote(user=reddit_user, vote_type=vote_type)
         vote.save()
-        comment.votes.set([vote])
+        comment.votes.add(vote)
     comment.score = get_vote_score(comment.votes.all())
     comment.save()
     return redirect("threaddetail", thread.id)

@@ -12,7 +12,11 @@ from Vote.models import Vote
 @login_required
 def homepage(request):
     html = "index.html"
-    threads = Thread.objects.all().order_by("-created_at")[:25]
+    # if request.user is not None:
+    #     reddit_user = get_object_or_404(RedditUser, user=request.user)
+    #     subscriptions = Subreddit.subscribers.filter(user=reddit_user)
+    #     print(subscriptions)
+    threads = Thread.objects.all().order_by("-votes")[:25]
     data = {"threads": threads}
     return render(request, html, data)
 
