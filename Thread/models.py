@@ -21,3 +21,14 @@ class Thread(models.Model):
 
     def __str__(self):
         return f"{self.subreddit} - {self.title}"
+
+    def set_score(self):
+        score = 0
+        for vote in self.votes.all():
+            if vote.vote_type == 1:
+                score += 1
+            elif vote.vote_type == 2:
+                score -= 1
+        self.score = score
+        return score
+

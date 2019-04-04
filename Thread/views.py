@@ -47,7 +47,7 @@ def new_thread_view(request, subreddit_name, post_type):
 
         if form.is_valid():
             data = form.cleaned_data
-            reddit_user = get_object_or_404(RedditUser, user=request.user)
+            reddit_user = request.user.reddituser
             subreddit = get_object_or_404(Subreddit, name=subreddit_name)
             thread = Thread(
                 title=data["title"],

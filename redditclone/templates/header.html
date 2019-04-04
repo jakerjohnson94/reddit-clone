@@ -1,16 +1,13 @@
-<div style="margin-right: 1em; margin-left: 1em">
-  <div class="row">
-    <a class="white-text" href="{% url 'homepage' %}"><button class="btn grey">Home</button></a>
-    <a class="white-text" href="{% url 'allsubs' %}">
-      <button class="btn grey">
-        All Subreddits
-      </button>
-    </a>
-
-    <div class="right">
-      {% if user %} {% include 'logout_button.html' %} {% else %}
-      <a class="white-text" href="{% url 'signup' %}"><button class="btn grey">Signup</button></a>
-      {% endif %}
-    </div>
+<nav>
+  <div class="nav-wrapper nav-color">
+    <a href="{% url 'homepage' %}" class="brand-logo">Shitty Reddit</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a class="white-text" href="{% url 'allsubs' %}">All Subreddits</a></li>
+      <li>
+        {% if user %} <a class="white-text" href="{% url 'logout' %}">Logout</a> {% else %}
+        <a class="white-text" href="{% url 'signup' %}">Signup<</a>
+        {% endif %}
+      </li>
+    </ul>
   </div>
-</div>
+</nav>

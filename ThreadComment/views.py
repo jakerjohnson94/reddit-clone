@@ -17,7 +17,7 @@ def post_comment(request, thread_id):
         form = PostCommentForm(request.POST)
         if form.is_valid():
             body = form.cleaned_data["body"]
-            reddit_user = get_object_or_404(RedditUser, user=request.user)
+            reddit_user = request.user.reddituser
             thread = get_object_or_404(Thread, pk=thread_id)
             comment = ThreadComment(
                 body=body, sender=reddit_user, post_thread=thread

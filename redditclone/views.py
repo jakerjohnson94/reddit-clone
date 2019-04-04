@@ -16,7 +16,7 @@ def homepage(request):
     #     reddit_user = get_object_or_404(RedditUser, user=request.user)
     #     subscriptions = Subreddit.subscribers.filter(user=reddit_user)
     #     print(subscriptions)
-    threads = Thread.objects.all().order_by("-votes")[:25]
+    threads = Thread.objects.all().order_by("-score")[:25]
     data = {"threads": threads}
     return render(request, html, data)
 

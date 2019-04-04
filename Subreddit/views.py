@@ -24,7 +24,7 @@ def list_all_view(request):
 def home_view(request, subreddit_name):
     html = "subreddit_homepage.html"
     subreddit = get_object_or_404(Subreddit, name=subreddit_name)
-    threads = Thread.objects.filter(subreddit=subreddit).order_by("-created_at")
+    threads = Thread.objects.filter(subreddit=subreddit).order_by("-score")
 
     if subreddit.moderators.filter(user=request.user).exists():
         is_moderator = True
@@ -50,13 +50,13 @@ def home_view(request, subreddit_name):
 def create_new_view(request):
     html = "subreddit_create.html"
     form = None
+    reddit_user = request.user.reddituser
     if request.method == "POST":
         form = CreateSubredditForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data["name"]
             description = form.cleaned_data["description"]
             sidebar_content = form.cleaned_data["sidebar_content"]
-            reddit_user = get_object_or_404(RedditUser, user=request.user)
             new_subreddit = Subreddit(
                 name=name,
                 description=description,
@@ -74,8 +74,8 @@ def create_new_view(request):
 
 def unsubscribe(request, subreddit_name):
     subreddit = get_object_or_404(Subreddit, name=subreddit_name)
+    reddit_user = request.user.reddituser
     try:
-        reddit_user = RedditUser.objects.get(user=request.user)
         subreddit.subscribers.remove(reddit_user)
     except Exception as e:
         print(e)
@@ -84,7 +84,7 @@ def unsubscribe(request, subreddit_name):
 
 def subscribe(request, subreddit_name):
     subreddit = get_object_or_404(Subreddit, name=subreddit_name)
-    reddit_user = get_object_or_404(RedditUser, user=request.user)
+    reddit_user = request.user.reddituser
     try:
         subreddit.subscribers.add(reddit_user)
     except Exception as e:

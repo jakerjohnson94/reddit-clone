@@ -18,3 +18,11 @@ button,
 a {
   color: #eb9b74;
 }
+
+.nav-color {
+  background-color: #4f4e4e !important;
+}
+
+.brand-logo {
+  margin-left: 0.5em;
+}
