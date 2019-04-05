@@ -12,7 +12,7 @@ from Vote.models import Vote
 from RedditUser.forms import LoginForm
 from django.views import View
 from django.contrib.auth.models import User
-# from .forms import UserRegisterForm
+from .forms import UserRegisterForm
 
 
 def login_view(request):
@@ -21,7 +21,6 @@ def login_view(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-            # breakpoint()
             data = form.cleaned_data
             user = authenticate(
                 username=data["username"], password=data["password"]
@@ -31,7 +30,6 @@ def login_view(request):
                 return redirect("/")
     else:
         form = LoginForm()
-    # raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
     return render(request, html, {"form": form})
 
 
@@ -43,15 +41,16 @@ def logout_action(request):
 def create_user_view(request):
     form = None
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
-            user = User.objects.create_user(username=username, password=password) # noqa
+            email = form.cleaned_data.get('email')
+            user = User.objects.create_user(username=username, email=email, password=password) # noqa
             RedditUser.objects.create(user=user)
             messages.success(request, f'Account created for {username}!')
             return redirect("/")
     else:
-        form = UserCreationForm()
+        form = UserRegisterForm()
     html = "signup.html"
     return render(request, html, {"form": form})
