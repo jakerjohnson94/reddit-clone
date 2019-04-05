@@ -1,23 +1,21 @@
 {% include "head.html" %}
-<div>
-  {% if messages %}
-    {% for message in messages %}
-      <div class="alert alert-{{ message.tags }}">
-        {{ message }}
-      </div>
-    {% endfor %}
-  {% endif %}
+<div class="container">
+  {% if messages %} {% for message in messages %}
+  <div class="alert alert-{{ message.tags }}">
+    {{ message }}
+  </div>
+  {% endfor %} {% endif %}
 </div>
 <div class="container">
-    <h2>Login</h2>
+  <h2>Login</h2>
   <form class="form" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Login</button>
-
+    <button class="btn grey" type="submit">Login</button>
+  </form>
 </div>
 
-</form>
-<div>
-  <a class="ml-2" href="{% url 'signup' %}">Don't Have An Account?</a>
-</div>
+<p class="centered center center-align">
+  <a class="center" href="{% url 'signup' %}">Don't Have An Account? Sign Up Now</a>
+</p>
+<div></div>

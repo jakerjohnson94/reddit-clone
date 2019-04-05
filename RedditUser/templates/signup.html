@@ -1,21 +1,18 @@
+{% include 'head.html' %} {% block content %}
+<div class="container">
+<h4>User Signup</h4>
+    <form class="form" method="POST">
+      {% csrf_token %}
 
+      {{ form }}
 
-{% block content %}
-<div class = "content-section">
-    <form method = 'POST'>
-        {% csrf_token %}
-        <fieldset class = "form-group">
-            <legend class = "border-bottom mb-4">Join Today!</legend>
-            {{ form }}
-        </fieldset>
-        <div class = "form-group">
-            <input type="submit" value="Submit"/>
-        </div>
+      <input type="submit" value="Submit" />
     </form>
-    <div class = "border-top pt-3">
-        <small class = "text-muted">
-            Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Log In Here!</a>
-        </small>
+    <div class="row">
+      <small class="text-muted">
+        Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Log In Here!</a>
+      </small>
     </div>
+  </div>
+  {% endblock %}
 </div>
-{% endblock %}

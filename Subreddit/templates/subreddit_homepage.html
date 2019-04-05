@@ -15,6 +15,7 @@
   </div>
 
   <!-- Post Button -->
+
   <div class="row">
     <a href="{% url 'newtextthread' subreddit.name 'text' %}" class="white-text"
       ><button class="btn grey">New Text Post</button></a
@@ -23,6 +24,7 @@
       ><button class="btn grey">New Link Post</button></a
     >
   </div>
+
   <!-- Description -->
   <div class="row">
     <!-- Thread List -->
@@ -35,41 +37,41 @@
       <div class="row">
         <div class="card">
           <div class="card-content">
-          <div class='row center'>
-            {% if is_subscriber %}
-            <button class="btn grey">
-              <a href="{% url 'unsubscribe' subreddit.name %}" class="white-text">Unsubscribe</a>
-            </button>
-            {% else %}
-            <a href="{% url 'subscribe' subreddit.name %}" class="white-text">
+            <div class="row center">
+              {% if request.user.is_authenticated %} {% if is_subscriber %}
               <button class="btn grey">
-                Subscribe
+                <a href="{% url 'unsubscribe' subreddit.name %}" class="white-text">Unsubscribe</a>
               </button>
-            </a>
-            {% endif %}
+              {% else %}
+              <a href="{% url 'subscribe' subreddit.name %}" class="white-text">
+                <button class="btn grey">
+                  Subscribe
+                </button>
+              </a>
+              {% endif %} {% endif %}
+            </div>
+            <!-- Sidebar Info -->
+            <div class="row">
+              <p class="card-title">Useful Content:</p>
+              <p>{{ subreddit.sidebar_content | default_if_none:'Nothing Here Yet...' }}</p>
+            </div>
+            <!-- Subscribers -->
+            <div class="row">
+              <p class="card-title">Subscribers:</p>
+              {% for subscriber in subscribers %}
+              <p>{{ subscriber.user.username | title }}</p>
+              {% endfor %}
             </div>
 
-          <!-- Sidebar Info -->
-          <div class="row">
-            <p class="card-title">Useful Content:</p>
-            <p>{{ subreddit.sidebar_content | default_if_none:'Nothing Here Yet...' }}</p>
-          </div>
-          <!-- Subscribers -->
-          <div class="row">
-            <p class="card-title">Subscribers:</p>
-            {% for subscriber in subscribers %}
-            <p>{{ subscriber.user.username | title }}</p>
-            {% endfor %}
-          </div>
-
-          <!-- Moderators -->
-          <div class="row">
-            <p class="card-title">Moderators:</p>
-            {% for moderator in moderators %}
-            <p>{{ moderator.user.username | title }}</p>
-            {% endfor %} {% if is_moderator %}
-            <p class="grey-text">You are a moderator</p>
-            {% endif %}
+            <!-- Moderators -->
+            <div class="row">
+              <p class="card-title">Moderators:</p>
+              {% for moderator in moderators %}
+              <p>{{ moderator.user.username | title }}</p>
+              {% endfor %} {% if is_moderator %}
+              <p class="grey-text">You are a moderator</p>
+              {% endif %}
+            </div>
           </div>
         </div>
       </div>

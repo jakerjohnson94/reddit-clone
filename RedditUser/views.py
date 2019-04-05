@@ -33,7 +33,7 @@ def login_view(request):
     # raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
     return render(request, html, {"form": form})
 
-
+@login_required
 def logout_action(request):
     logout(request)
     return redirect(request.GET.get("next", "/"))

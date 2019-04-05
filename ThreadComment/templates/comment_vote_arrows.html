@@ -1,12 +1,17 @@
 <div class="center-align" style=" width: 3em;">
   <div class="row center-align">
+  
+  {% if request.user.is_authenticated %}
     <a href="{% url 'commentVote' comment.id 1 %}">
+  {% endif %}
       {% if comment.has_upvoted %}
       <i class="material-icons orange-text center">arrow_drop_up</i>
       {% else %}
       <i class="material-icons grey-text center">arrow_drop_up</i>
       {% endif %}
+  {% if request.user.is_authenticated %}
     </a>
+  {% endif %}
   </div>
 
   <div class="row  centered">
@@ -14,12 +19,16 @@
   </div>
 
   <div class="row">
+  {% if request.user.is_authenticated %}
     <a href="{% url 'commentVote' comment.id 2 %}">
+    {% endif %}
       {% if comment.has_downvoted %}
       <i class="material-icons blue-text">arrow_drop_down</i>
       {% else %}
       <i class="material-icons grey-text">arrow_drop_down</i>
       {% endif %}
+    {% if request.user.is_authenticated %}
     </a>
+    {% endif %}
   </div>
 </div>

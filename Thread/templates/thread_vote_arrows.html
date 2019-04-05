@@ -1,12 +1,14 @@
 <div class="center-align" style=" width: 3em;">
   <div class="row">
+    {% if request.user.is_authenticated %}
     <a href="{% url 'threadVote' thread.id 1 %}">
-      {% if thread.has_upvoted %}
+      {% endif %} {% if thread.has_upvoted %}
       <i class="material-icons orange-text ">arrow_drop_up</i>
       {% else %}
       <i class="material-icons grey-text">arrow_drop_up</i>
-      {% endif %}
+      {% endif %} {% if request.user.is_authenticated %}
     </a>
+    {% endif %}
   </div>
 
   <div class="row  centered">
@@ -14,12 +16,14 @@
   </div>
 
   <div class="row">
+    {% if request.user.is_authenticated %}
     <a href="{% url 'threadVote' thread.id 2 %}">
-      {% if thread.has_downvoted %}
+      {% endif %} {% if thread.has_downvoted %}
       <i class="material-icons blue-text">arrow_drop_down</i>
       {% else %}
       <i class="material-icons grey-text">arrow_drop_down</i>
-      {% endif %}
+      {% endif %} {% if request.user.is_authenticated %}
     </a>
+    {% endif %}
   </div>
 </div>

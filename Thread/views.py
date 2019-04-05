@@ -18,12 +18,15 @@ def thread_page_view(request, thread_id):
     comments = ThreadComment.objects.filter(post_thread=thread).order_by(
         "-score"
     )
-    flag_user_thread_votes(comments, request)
-    flag_user_thread_votes([thread], request)
-    is_moderator = thread.subreddit.moderators.filter(
-        user=request.user
-    ).exists()
-    is_own_post = thread.sender.user is request.user
+    is_moderator = False
+    is_own_post = False
+    if request.user.is_authenticated:
+        flag_user_thread_votes(comments, request)
+        flag_user_thread_votes([thread], request)
+        is_moderator = thread.subreddit.moderators.filter(
+            user=request.user
+        ).exists()
+        is_own_post = thread.sender.user == request.user
     return render(
         request,
         html,
@@ -80,7 +83,7 @@ def delete_thread(request, thread_id):
     thread = get_object_or_404(Thread, pk=thread_id)
     subreddit = thread.subreddit
     is_moderator = subreddit.moderators.filter(user=request.user).exists()
-    is_own_post = thread.sender.user is request.user
+    is_own_post = thread.sender.user == request.user
     if is_moderator or is_own_post:
         thread.delete()
     else:
@@ -88,6 +91,7 @@ def delete_thread(request, thread_id):
     return redirect("subreddit", subreddit.name)
 
 
+@login_required
 def thread_vote(request, thread_id, vote_type):
     thread = get_object_or_404(Thread, pk=thread_id)
     reddit_user = request.user.reddituser

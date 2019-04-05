@@ -17,9 +17,8 @@ def homepage(request):
             subreddit__in=subscribed_subreddits
         ).order_by("-score")[:25]
         flag_user_thread_votes(threads, request)
-        print("here")
     else:
-        threads = Thread.objects.all()
+        threads = Thread.objects.all().order_by("-score")[:25]
     data = {"threads": threads}
     return render(request, html, data)
 

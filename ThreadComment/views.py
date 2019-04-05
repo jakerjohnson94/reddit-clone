@@ -36,7 +36,7 @@ def delete_comment(request, comment_id):
     thread = comment.post_thread
     subreddit = thread.subreddit
     is_moderator = subreddit.moderators.filter(user=request.user).exists()
-    is_own_post = comment.sender.user is request.user
+    is_own_post = comment.sender.user == request.user
     if is_moderator or is_own_post:
         comment.delete()
     else:
@@ -44,6 +44,7 @@ def delete_comment(request, comment_id):
     return redirect("subreddit", subreddit.name)
 
 
+@login_required
 def comment_vote(request, comment_id, vote_type):
     comment = get_object_or_404(ThreadComment, pk=comment_id)
     thread = comment.post_thread

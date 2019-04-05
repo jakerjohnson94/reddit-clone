@@ -26,17 +26,15 @@ def home_view(request, subreddit_name):
     html = "subreddit_homepage.html"
     subreddit = get_object_or_404(Subreddit, name=subreddit_name)
     threads = Thread.objects.filter(subreddit=subreddit).order_by("-score")
+    is_moderator = False
+    is_subscriber = False
+    if request.user.is_authenticated:
+        flag_user_thread_votes(threads, request)
+        if subreddit.moderators.filter(user=request.user).exists():
+            is_moderator = True
+        if subreddit.subscribers.filter(user=request.user).exists():
+            is_subscriber = True
 
-    if subreddit.moderators.filter(user=request.user).exists():
-        is_moderator = True
-    else:
-        is_moderator = False
-
-    if subreddit.subscribers.filter(user=request.user).exists():
-        is_subscriber = True
-    else:
-        is_subscriber = False
-    flag_user_thread_votes(threads, request)
     data = {
         "subreddit": subreddit,
         "threads": threads,
@@ -48,6 +46,7 @@ def home_view(request, subreddit_name):
     return render(request, html, data)
 
 
+@login_required
 def create_new_view(request):
     html = "subreddit_create.html"
     form = None
@@ -73,6 +72,7 @@ def create_new_view(request):
     return render(request, html, {"form": form})
 
 
+@login_required
 def unsubscribe(request, subreddit_name):
     subreddit = get_object_or_404(Subreddit, name=subreddit_name)
     reddit_user = request.user.reddituser
@@ -83,6 +83,7 @@ def unsubscribe(request, subreddit_name):
     return redirect("subreddit", subreddit_name)
 
 
+@login_required
 def subscribe(request, subreddit_name):
     subreddit = get_object_or_404(Subreddit, name=subreddit_name)
     reddit_user = request.user.reddituser
