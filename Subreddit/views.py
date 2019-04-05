@@ -8,10 +8,11 @@ from ThreadComment.models import ThreadComment
 from RedditUser.models import RedditUser
 from .models import Subreddit
 from .forms import CreateSubredditForm
-from Vote.models import Vote
+
 from RedditUser.forms import LoginForm
 from django.views import View
 from django.http import HttpResponseRedirect
+from redditclone.helpers import flag_user_thread_votes
 
 
 def list_all_view(request):
@@ -35,7 +36,7 @@ def home_view(request, subreddit_name):
         is_subscriber = True
     else:
         is_subscriber = False
-
+    flag_user_thread_votes(threads, request)
     data = {
         "subreddit": subreddit,
         "threads": threads,

@@ -5,7 +5,7 @@ from .forms import PostCommentForm
 from Thread.models import Thread
 from RedditUser.models import RedditUser
 from Subreddit.models import Subreddit
-from Vote.models import Vote
+
 from django.views import View
 
 
@@ -42,3 +42,23 @@ def delete_comment(request, comment_id):
     else:
         return HttpResponseForbidden()
     return redirect("subreddit", subreddit.name)
+
+
+def comment_vote(request, comment_id, vote_type):
+    comment = get_object_or_404(ThreadComment, pk=comment_id)
+    thread = comment.post_thread
+    reddit_user = request.user.reddituser
+    user_upvote = comment.upvoters.filter(user=request.user)
+    user_downvote = comment.downvoters.filter(user=request.user)
+    if user_upvote.exists():
+        comment.upvoters.remove(reddit_user)
+    elif user_downvote.exists():
+        comment.downvoters.remove(reddit_user)
+    else:
+        if vote_type == 1:
+            comment.upvoters.add(reddit_user)
+        if vote_type == 2:
+            comment.downvoters.add(reddit_user)
+    comment.set_score()
+    comment.save()
+    return redirect("threaddetail", thread.id)

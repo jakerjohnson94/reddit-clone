@@ -1,7 +1,6 @@
 from django.db import models
 from RedditUser.models import RedditUser
 from Subreddit.models import Subreddit
-from Vote.models import Vote
 
 
 class Thread(models.Model):
@@ -32,6 +31,3 @@ class Thread(models.Model):
 
     def set_score(self):
         self.score = len(self.upvoters.all()) - len(self.downvoters.all())
-
-    # def flag_user_upvote(self, request):
-    #     user_vote = self.upvoters.get(user=request.user)

@@ -1,4 +1,4 @@
-<div class="center-align" style="margin-right: .5em">
+<div class="center-align" style=" width: 3em;">
   <div class="row">
     <a href="{% url 'threadVote' thread.id 1 %}">
       {% if thread.has_upvoted %}
@@ -10,7 +10,7 @@
   </div>
 
   <div class="row  centered">
-    <p class="grey-text">{{ thread.score | default_if_none:'0' }}</p>
+    <p class="grey-text">{{ thread.score | default_if_none:0 }}</p>
   </div>
 
   <div class="row">

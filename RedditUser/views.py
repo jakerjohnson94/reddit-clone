@@ -5,7 +5,6 @@ from Thread.models import Thread
 from ThreadComment.models import ThreadComment
 from RedditUser.models import RedditUser
 from Subreddit.models import Subreddit
-from Vote.models import Vote
 from RedditUser.forms import LoginForm
 from django.views import View
 

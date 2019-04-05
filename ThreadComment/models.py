@@ -2,7 +2,6 @@ from django.db import models
 from RedditUser.models import RedditUser
 from Subreddit.models import Subreddit
 from Thread.models import Thread
-from Vote.models import Vote
 
 
 class ThreadComment(models.Model):

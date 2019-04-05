@@ -1,22 +1,33 @@
-<h4>{{ thread.title | title }}</h4>
-
-<p class="grey-text">{{ thread.created_at }}</p>
-<em class="grey-text">
-  in <a href="{% url 'subreddit' thread.subreddit.name %}">r/{{ thread.subreddit.name }}/</a> by
-  {{ thread.sender.user.username | title }}
-</em>
-
-{% if thread.is_link_post %}
-<p>
-  <a href="{{ thread.link }}">{{ thread.link }}</a>
-</p>
-{% else %}
-<p>{{ thread.body }}</p>
-{% endif %} {% if is_moderator or is_own_post%}
-<a href="{% url 'threadDelete' thread.id %}">
-  <div class="row valign-wrapper">
-    <i class="material-icons grey-text">close</i>
-    <button class="btn-flat white grey-text" style="text-transform:none">Delete Thread</button>
+<div class="card horizontal">
+  <div class="card-image center center-align valign-wrapper vote-wrapper">
+    {% include 'thread_vote_arrows.html' %}
   </div>
-</a>
-{% endif %}
+  <div class="card-stacked">
+    <div class="card-content">
+      <h5>{{ thread.title | title }}</h5>
+      <p class="grey-text">
+        {{ thread.created_at }} by <em>{{ thread.sender.user.username | title }}</em>
+      </p>
+      <p class="card-body">
+        {% if thread.is_link_post %}
+        <a href="{{ thread.link }}">{{ thread.link }}</a>
+
+        {% else %}
+        {{ thread.body }}
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="card-action">
+      {% if is_moderator or is_own_post %}
+      <div class="valign-wrapper">
+        <div class="col s2">
+          <a href="{% url 'threadDelete' thread.id %}">
+            <p>Delete Thread</p>
+          </a>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
