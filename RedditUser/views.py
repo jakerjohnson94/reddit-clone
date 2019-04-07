@@ -11,6 +11,7 @@ from Subreddit.models import Subreddit
 from RedditUser.forms import LoginForm
 from django.views import View
 from django.contrib.auth.models import User
+
 # from .forms import UserRegisterForm
 
 
@@ -20,7 +21,6 @@ def login_view(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-            # breakpoint()
             data = form.cleaned_data
             user = authenticate(
                 username=data["username"], password=data["password"]
@@ -30,8 +30,8 @@ def login_view(request):
                 return redirect("/")
     else:
         form = LoginForm()
-    # raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
     return render(request, html, {"form": form})
+
 
 @login_required
 def logout_action(request):
@@ -44,11 +44,13 @@ def create_user_view(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = User.objects.create_user(username=username, password=password) # noqa
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password1")
+            user = User.objects.create_user(
+                username=username, password=password
+            )
             RedditUser.objects.create(user=user)
-            messages.success(request, f'Account created for {username}!')
+            messages.success(request, f"Account created for {username}!")
             return redirect("/")
     else:
         form = UserCreationForm()

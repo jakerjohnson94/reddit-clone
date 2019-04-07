@@ -2,11 +2,11 @@
 <div class="container">
   <div class="card">
     <div class="card-content">
-      <h4>New {{ post_type | title }} Post</h4>
+      <h4>Select a User To Message</h4>
       <form class="form" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn grey" type="submit">Post</button>
+        <button class="btn grey" type="submit">Select</button>
       </form>
     </div>
   </div>

@@ -4,7 +4,10 @@
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       {% if user.is_authenticated %}
       <li>
-        <a class="white-text" href="{% url 'logout' %}">Logout {{ request.user.username }} </a>
+        <span>{{ request.user.username | title }}</span>
+      </li>
+      <li>
+        <a class="white-text" href="{% url 'logout' %}">Logout </a>
       </li>
       {% else %}
       <li><a class="white-text" href="{% url 'login' %}">Login</a></li>

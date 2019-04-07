@@ -31,3 +31,4 @@ class Thread(models.Model):
 
     def set_score(self):
         self.score = len(self.upvoters.all()) - len(self.downvoters.all())
+
