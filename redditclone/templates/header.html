@@ -4,8 +4,14 @@
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li><a class="white-text" href="{% url 'allsubs' %}">All Subreddits</a></li>
       <li>
-        {% if user %} <a class="white-text" href="{% url 'logout' %}">Logout</a> {% else %}
-        <a class="white-text" href="{% url 'signup' %}">Signup<</a>
+        {% if user %} <a href="{% url 'change_password' %}">Change Password</a> </li>
+        {% else %} 
+        <p></p>
+        {% endif %}
+      <li>
+        {% if user %} <a class="white-text" href="{% url 'logout' %}">Logout</a>
+        {% else %}
+        <a class="white-text" href="{% url 'signup' %}">Signup</a>
         {% endif %}
       </li>
     </ul>
