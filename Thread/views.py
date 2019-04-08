@@ -73,7 +73,10 @@ def new_thread_view(request, subreddit_name, post_type):
                 thread.body = data["body"]
             elif post_type == "link":
                 thread.link = data["link"]
-                get_url_link_thumbnail(thread, thread.link)
+                thread.link_preview_img = get_url_link_thumbnail(
+                    thread, thread.link
+                )
+                thread.save()
             thread.save()
             return redirect("subreddit", subreddit_name)
     else:

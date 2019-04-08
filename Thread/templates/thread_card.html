@@ -15,6 +15,7 @@
       <h5><a href="{% url 'threaddetail' thread.id %}"> {{ thread.title | title }}</a></h5>
       <p class="grey-text">
         {{ thread.created_at }} by <em>{{ thread.sender.user.username | title }}</em>
+        in <a href="{% url 'subreddit' thread.subreddit.name %}"> {{thread.subreddit.name}}</a>
       </p>
       <p class="card-body">
         {% if thread.is_link_post %}
