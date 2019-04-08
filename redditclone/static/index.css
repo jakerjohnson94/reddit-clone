@@ -37,6 +37,7 @@ a {
   font-size: 18 !important;
 }
 .link-preview-img {
+  padding: 0.5em !important;
   height: 15em !important;
   width: 100%;
 }

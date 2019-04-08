@@ -1,31 +1,33 @@
-<div class="card">
-  <div class="card-content">
-    <div class="row">
-      <div class="col">
-        {% include 'thread_vote_arrows.html' %}
-      </div>
+<div class="card horizontal">
+  <div class="card-image center center-align valign-wrapper vote-wrapper">
+    {% include 'thread_vote_arrows.html' %}
+  </div>
 
-      <div class="col">
-        <h5>
-          <a href="{% url 'threaddetail' thread.id %}"> {{ thread.title | title }}</a>
-        </h5>
+  {% if thread.is_link_post %}
+  <div class="card-image valign-wrapper">
+    <img class="link-preview-img" src="{{ thread.link_preview_img.url }}" alt="URL Preview" />
+  </div>
 
-        <p class="grey-text">
-          {{ thread.created_at }}
-          by <b>{{ thread.sender.user.username | title }}</b> in
-          <a href="{% url 'subreddit' thread.subreddit.name %}">
-            /r/{{ thread.subreddit.name | title }}/
-          </a>
-        </p>
-        <p class="card-body">
-          {% if thread.is_link_post %}
-          {{ thread.link | truncatechars:20 }}
-          {% else %}
-          {{ thread.body | truncatechars:50 }}
+  {% endif %}
 
-          {% endif %}
-        </p>
-      </div>
+  <div class="card-stacked">
+    <div class="card-content">
+      <h5><a href="{% url 'threaddetail' thread.id %}"> {{ thread.title | title }}</a></h5>
+      <p class="grey-text">
+        {{ thread.created_at }} by <em>{{ thread.sender.user.username | title }}</em>
+      </p>
+      <p class="card-body">
+        {% if thread.is_link_post %}
+        <a href="{{ thread.link }}">{{ thread.link }}</a>
+
+        {% else %}
+        {{ thread.body }}
+        {% endif %}
+      </p>
     </div>
+
   </div>
 </div>
+
+
+          
