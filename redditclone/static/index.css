@@ -37,6 +37,7 @@ a {
   font-size: 18 !important;
 }
 .link-preview-img {
-  padding: 0.5em !important;
-  height: 15em !important;
+  background-size: cover;
+  width: 200px;
+  height: 140px;
 }

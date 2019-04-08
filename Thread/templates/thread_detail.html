@@ -7,8 +7,11 @@
 
   <div class="card-image valign-wrapper">
     <a href="{{ thread.link }}"
-      ><img class="link-preview-img" src="{{ thread.link_preview_img.url }}" alt="URL Preview"
-    /></a>
+      ><div
+        class="link-preview-img"
+        style="background-image: url('{{ thread.link_preview_img.url }}')"
+      ></div
+    ></a>
   </div>
   {% endif %}
 
