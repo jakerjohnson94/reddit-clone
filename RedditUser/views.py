@@ -32,6 +32,7 @@ def login_view(request):
         form = LoginForm()
     return render(request, html, {"form": form})
 
+
 @login_required
 def logout_action(request):
     logout(request)
@@ -56,18 +57,17 @@ def create_user_view(request):
     return render(request, html, {"form": form})
 
 
+@login_required
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, 'Your password was successfully updated!')
+            messages.success(request, 'Your password was successfully updated!') # noqa
             return redirect('change_password')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
         form = PasswordChangeForm(request.user)
-    return render(request, 'change_password.html', {
-        'form': form
-    })
+    return render(request, 'change_password.html', {'form': form})
