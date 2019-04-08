@@ -1,9 +1,11 @@
 {% include 'head.html' %} {% include 'header.html' %}
 <div class="container">
-  <h2>New {{ post_type | title }} Post</h2>
-  <form class="form" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn grey" type="submit">Post</button>
-  </form>
+  <div class="card-panel">
+    <h2>New {{ post_type | title }} Post</h2>
+    <form class="form" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn grey" type="submit">Post</button>
+    </form>
+  </div>
 </div>

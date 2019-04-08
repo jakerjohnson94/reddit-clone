@@ -1,6 +1,6 @@
 {% include 'head.html' %} {% include 'header.html' %}
 <div class="container">
-  <h4>Hello {{ user.username | title }}</h4>
+  <h4>{{ user.username | title }}</h4>
 
   {% if has_upvoted %}
   <h2>VOTED</h2>
@@ -10,5 +10,11 @@
   <div class="row">
     <h5>Top Posts:</h5>
   </div>
-  {% for thread in threads %} {% include 'thread_card.html' %} {% endfor %}
+
+  {% if threads is not None %} {% for thread in threads %} {% include 'thread_card.html' %} 
+  {%endfor%} {% else %}
+  <div class='card-panel'>
+  <p>Nothing Here... Try <a href="{% url 'allsubs' %}" >finding new subbredits and subscribing to them.</a></p>
+  </div>
+  {% endif %}
 </div>

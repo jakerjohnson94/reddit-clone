@@ -1,9 +1,11 @@
 {% include 'head.html' %} {% include 'header.html' %}
 <div class="container">
-  <h2>Create a New Subreddit</h2>
-  <form class="form" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn grey" type="submit">Create</button>
-  </form>
+  <div class="card-panel">
+    <h2>Create a New Subreddit</h2>
+    <form class="form" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn grey" type="submit">Create</button>
+    </form>
+  </div>
 </div>

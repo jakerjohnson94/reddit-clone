@@ -16,9 +16,12 @@ def homepage(request):
         threads = Thread.objects.filter(
             subreddit__in=subscribed_subreddits
         ).order_by("-score")[:25]
+
         flag_user_thread_votes(threads, request)
     else:
         threads = Thread.objects.all().order_by("-score")[:25]
+    if not threads.exists():
+        threads = None
     data = {"threads": threads}
     return render(request, html, data)
 
