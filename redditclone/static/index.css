@@ -36,6 +36,7 @@ a {
 .comment-title {
   font-size: 18 !important;
 }
-/* .vote-wrapper{
-  padding-left: .5em
-} */
+.link-preview-img {
+  height: 15em !important;
+  width: 100%;
+}

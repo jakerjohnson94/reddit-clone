@@ -8,7 +8,8 @@ from RedditUser.urls import urlpatterns as reddit_user_urls
 from Subreddit.urls import urlpatterns as subbredit_urls
 from Thread.urls import urlpatterns as thread_urls
 from ThreadComment.urls import urlpatterns as thread_comment_urls
-
+from django.conf.urls.static import static
+from django.conf import settings
 
 from .views import homepage
 
@@ -26,4 +27,4 @@ urlpatterns += reddit_user_urls
 urlpatterns += subbredit_urls
 urlpatterns += thread_urls
 urlpatterns += thread_comment_urls
-
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
