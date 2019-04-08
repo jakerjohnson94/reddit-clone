@@ -2,7 +2,7 @@
   <div class="nav-wrapper nav-color">
     <a href="{% url 'homepage' %}" class="brand-logo">Shitty Reddit</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a class="white-text" href="{% url 'allsubs' %}">All Subreddits</a></li>
+      {% if user.is_authenticated %}
       <li>
         {% if user %} <a href="{% url 'change_password' %}">Change Password</a> </li>
         {% else %} 
@@ -14,6 +14,10 @@
         <a class="white-text" href="{% url 'signup' %}">Signup</a>
         {% endif %}
       </li>
+      {% else %}
+      <li><a class="white-text" href="{% url 'login' %}">Login</a></li>
+      {% endif %}
+      <li><a class="white-text" href="{% url 'allsubs' %}">All Subreddits</a></li>
     </ul>
   </div>
 </nav>

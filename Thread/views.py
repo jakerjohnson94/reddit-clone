@@ -6,21 +6,27 @@ from .forms import TextThreadForm, LinkThreadForm
 from ThreadComment.models import ThreadComment
 from RedditUser.models import RedditUser
 from Subreddit.models import Subreddit
-from Vote.models import Vote
+
 from django.views import View
 from django.http import HttpResponseForbidden
+from redditclone.helpers import flag_user_thread_votes
 
 
 def thread_page_view(request, thread_id):
     html = "thread_page.html"
     thread = get_object_or_404(Thread, pk=thread_id)
     comments = ThreadComment.objects.filter(post_thread=thread).order_by(
-        "-created_at"
+        "-score"
     )
-    is_moderator = thread.subreddit.moderators.filter(
-        user=request.user
-    ).exists()
-    is_own_post = thread.sender.user == request.user
+    is_moderator = False
+    is_own_post = False
+    if request.user.is_authenticated:
+        flag_user_thread_votes(comments, request)
+        flag_user_thread_votes([thread], request)
+        is_moderator = thread.subreddit.moderators.filter(
+            user=request.user
+        ).exists()
+        is_own_post = thread.sender.user == request.user
     return render(
         request,
         html,
@@ -83,3 +89,23 @@ def delete_thread(request, thread_id):
     else:
         return HttpResponseForbidden()
     return redirect("subreddit", subreddit.name)
+
+
+@login_required
+def thread_vote(request, thread_id, vote_type):
+    thread = get_object_or_404(Thread, pk=thread_id)
+    reddit_user = request.user.reddituser
+    user_upvote = thread.upvoters.filter(user=request.user)
+    user_downvote = thread.downvoters.filter(user=request.user)
+    if user_upvote.exists():
+        thread.upvoters.remove(reddit_user)
+    elif user_downvote.exists():
+        thread.downvoters.remove(reddit_user)
+    else:
+        if vote_type == 1:
+            thread.upvoters.add(reddit_user)
+        if vote_type == 2:
+            thread.downvoters.add(reddit_user)
+    thread.set_score()
+    thread.save()
+    return redirect("/")

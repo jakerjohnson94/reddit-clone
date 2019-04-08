@@ -3,7 +3,6 @@
     <div class="row">
       <div class="col">
         {% include 'thread_vote_arrows.html' %}
-
       </div>
 
       <div class="col">
@@ -18,12 +17,14 @@
             /r/{{ thread.subreddit.name | title }}/
           </a>
         </p>
+        <p class="card-body">
+          {% if thread.is_link_post %}
+          {{ thread.link | truncatechars:20 }}
+          {% else %}
+          {{ thread.body | truncatechars:50 }}
 
-        {% if thread.is_link_post %}
-        <p>{{ thread.link | truncatechars:20 }}</p>
-        {% else %}
-        <p>{{ thread.body | truncatechars:50 }}</p>
-        {% endif %}
+          {% endif %}
+        </p>
       </div>
     </div>
   </div>

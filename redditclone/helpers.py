@@ -1,8 +1,6 @@
-def get_vote_score(votes):
-    score = 0
-    for vote in votes:
-        if vote.vote_type == 1:
-            score += 1
-        elif vote.vote_type == 2:
-            score -= 1
-    return score
+def flag_user_thread_votes(threads, request):
+    for thread in threads:
+        if thread.upvoters.filter(user=request.user).exists():
+            thread.has_upvoted = True
+        elif thread.downvoters.filter(user=request.user).exists():
+            thread.has_downvoted = True

@@ -6,17 +6,19 @@ from Thread.models import Thread
 from ThreadComment.models import ThreadComment
 from RedditUser.models import RedditUser
 from Subreddit.models import Subreddit
-from Vote.models import Vote
+from .helpers import flag_user_thread_votes
 
 
-@login_required
 def homepage(request):
     html = "index.html"
-    # if request.user is not None:
-    #     reddit_user = get_object_or_404(RedditUser, user=request.user)
-    #     subscriptions = Subreddit.subscribers.filter(user=reddit_user)
-    #     print(subscriptions)
-    threads = Thread.objects.all().order_by("-score")[:25]
+    if request.user.is_authenticated:
+        subscribed_subreddits = request.user.reddituser.subscribers.all()
+        threads = Thread.objects.filter(
+            subreddit__in=subscribed_subreddits
+        ).order_by("-score")[:25]
+        flag_user_thread_votes(threads, request)
+    else:
+        threads = Thread.objects.all().order_by("-score")[:25]
     data = {"threads": threads}
     return render(request, html, data)
 

@@ -9,7 +9,6 @@ from Thread.models import Thread
 from ThreadComment.models import ThreadComment
 from RedditUser.models import RedditUser
 from Subreddit.models import Subreddit
-from Vote.models import Vote
 from RedditUser.forms import LoginForm
 from django.views import View
 from django.contrib.auth.models import User
@@ -33,7 +32,7 @@ def login_view(request):
         form = LoginForm()
     return render(request, html, {"form": form})
 
-
+@login_required
 def logout_action(request):
     logout(request)
     return redirect(request.GET.get("next", "/"))

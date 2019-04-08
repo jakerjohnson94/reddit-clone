@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     "RedditUser",
     "Subreddit",
     "Thread",
-    "Vote",
     "ThreadComment",
 ]
 

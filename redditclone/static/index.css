@@ -18,6 +18,9 @@ button,
 a {
   color: #eb9b74;
 }
+.card .card-action a {
+  color: #eb9b74 !important;
+}
 
 .nav-color {
   background-color: #4f4e4e !important;
@@ -26,3 +29,13 @@ a {
 .brand-logo {
   margin-left: 0.5em;
 }
+.card-body {
+  padding-top: 1em !important;
+  margin-top: 1em !important;
+}
+.comment-title {
+  font-size: 18 !important;
+}
+/* .vote-wrapper{
+  padding-left: .5em
+} */

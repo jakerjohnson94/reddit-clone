@@ -8,10 +8,11 @@ from ThreadComment.models import ThreadComment
 from RedditUser.models import RedditUser
 from .models import Subreddit
 from .forms import CreateSubredditForm
-from Vote.models import Vote
+
 from RedditUser.forms import LoginForm
 from django.views import View
 from django.http import HttpResponseRedirect
+from redditclone.helpers import flag_user_thread_votes
 
 
 def list_all_view(request):
@@ -25,16 +26,14 @@ def home_view(request, subreddit_name):
     html = "subreddit_homepage.html"
     subreddit = get_object_or_404(Subreddit, name=subreddit_name)
     threads = Thread.objects.filter(subreddit=subreddit).order_by("-score")
-
-    if subreddit.moderators.filter(user=request.user).exists():
-        is_moderator = True
-    else:
-        is_moderator = False
-
-    if subreddit.subscribers.filter(user=request.user).exists():
-        is_subscriber = True
-    else:
-        is_subscriber = False
+    is_moderator = False
+    is_subscriber = False
+    if request.user.is_authenticated:
+        flag_user_thread_votes(threads, request)
+        if subreddit.moderators.filter(user=request.user).exists():
+            is_moderator = True
+        if subreddit.subscribers.filter(user=request.user).exists():
+            is_subscriber = True
 
     data = {
         "subreddit": subreddit,
@@ -47,6 +46,7 @@ def home_view(request, subreddit_name):
     return render(request, html, data)
 
 
+@login_required
 def create_new_view(request):
     html = "subreddit_create.html"
     form = None
@@ -72,6 +72,7 @@ def create_new_view(request):
     return render(request, html, {"form": form})
 
 
+@login_required
 def unsubscribe(request, subreddit_name):
     subreddit = get_object_or_404(Subreddit, name=subreddit_name)
     reddit_user = request.user.reddituser
@@ -82,6 +83,7 @@ def unsubscribe(request, subreddit_name):
     return redirect("subreddit", subreddit_name)
 
 
+@login_required
 def subscribe(request, subreddit_name):
     subreddit = get_object_or_404(Subreddit, name=subreddit_name)
     reddit_user = request.user.reddituser
