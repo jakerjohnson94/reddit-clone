@@ -12,7 +12,7 @@
       </div>
     </div>
       <div class="card-action">
-        {% if is_moderator or is_own_post %}
+        {% if is_moderator or comment.is_own_post %}
         <div class="valign-wrapper">
           <a href="{% url 'deleteComment' comment.id %}">
             <p>Delete Comment</p>

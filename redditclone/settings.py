@@ -128,7 +128,9 @@ STATIC_URL = "/static/"
 
 LOGIN_URL = "/login/"
 
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), "/var/www/static/"]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
