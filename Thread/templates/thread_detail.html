@@ -6,7 +6,9 @@
   {% if thread.is_link_post %}
 
   <div class="card-image valign-wrapper">
-    <img class="link-preview-img" src="{{ thread.link_preview_img.url }}" alt="URL Preview" />
+    <a href="{{ thread.link }}"
+      ><img class="link-preview-img" src="{{ thread.link_preview_img.url }}" alt="URL Preview"
+    /></a>
   </div>
   {% endif %}
 
