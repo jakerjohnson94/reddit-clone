@@ -128,5 +128,6 @@ STATIC_URL = "/static/"
 
 LOGIN_URL = "/login/"
 
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), "/var/www/static/"]
+ENV_PATH = os.path.abspath(os.path.dirname(__file__))
+MEDIA_ROOT = os.path.join(ENV_PATH, "media/")
 

@@ -9,7 +9,11 @@ from Subreddit.models import Subreddit
 
 from django.views import View
 from django.http import HttpResponseForbidden
-from redditclone.helpers import flag_user_thread_votes
+from redditclone.helpers import (
+    flag_user_thread_votes,
+    set_post_score,
+    flag_own_post,
+)
 
 
 def thread_page_view(request, thread_id):
@@ -18,6 +22,9 @@ def thread_page_view(request, thread_id):
     comments = ThreadComment.objects.filter(post_thread=thread).order_by(
         "-score"
     )
+    for comment in comments:
+        flag_own_post(comment, request.user)
+        set_post_score(comment)
     is_moderator = False
     is_own_post = False
     if request.user.is_authenticated:
