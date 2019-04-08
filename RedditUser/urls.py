@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.urls import path
 from .views import login_view, logout_action, create_user_view
 from RedditUser import views
