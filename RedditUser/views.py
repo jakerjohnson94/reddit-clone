@@ -1,7 +1,8 @@
 from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from Thread.models import Thread
@@ -11,7 +12,7 @@ from Subreddit.models import Subreddit
 from RedditUser.forms import LoginForm
 from django.views import View
 from django.contrib.auth.models import User
-# from .forms import UserRegisterForm
+from .forms import UserRegisterForm
 
 
 def login_view(request):
@@ -20,7 +21,6 @@ def login_view(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-            # breakpoint()
             data = form.cleaned_data
             user = authenticate(
                 username=data["username"], password=data["password"]
@@ -30,8 +30,8 @@ def login_view(request):
                 return redirect("/")
     else:
         form = LoginForm()
-    # raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
     return render(request, html, {"form": form})
+
 
 @login_required
 def logout_action(request):
@@ -42,15 +42,32 @@ def logout_action(request):
 def create_user_view(request):
     form = None
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
-            user = User.objects.create_user(username=username, password=password) # noqa
+            email = form.cleaned_data.get('email')
+            user = User.objects.create_user(username=username, email=email, password=password) # noqa
             RedditUser.objects.create(user=user)
             messages.success(request, f'Account created for {username}!')
             return redirect("/")
     else:
-        form = UserCreationForm()
+        form = UserRegisterForm()
     html = "signup.html"
     return render(request, html, {"form": form})
+
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!') # noqa
+            return redirect('change_password')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'change_password.html', {'form': form})
