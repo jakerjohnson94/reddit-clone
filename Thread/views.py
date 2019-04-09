@@ -9,7 +9,12 @@ from Subreddit.models import Subreddit
 
 from django.views import View
 from django.http import HttpResponseForbidden
-from redditclone.helpers import flag_user_thread_votes
+from redditclone.helpers import (
+    flag_user_thread_votes,
+    set_post_score,
+    flag_own_post,
+    get_url_link_thumbnail,
+)
 
 
 def thread_page_view(request, thread_id):
@@ -18,6 +23,9 @@ def thread_page_view(request, thread_id):
     comments = ThreadComment.objects.filter(post_thread=thread).order_by(
         "-score"
     )
+    for comment in comments:
+        flag_own_post(comment, request.user)
+        set_post_score(comment)
     is_moderator = False
     is_own_post = False
     if request.user.is_authenticated:
@@ -50,7 +58,6 @@ def new_thread_view(request, subreddit_name, post_type):
         elif post_type == "link":
             form = LinkThreadForm(request.POST)
             is_link_post = True
-
         if form.is_valid():
             data = form.cleaned_data
             reddit_user = request.user.reddituser
@@ -66,7 +73,10 @@ def new_thread_view(request, subreddit_name, post_type):
                 thread.body = data["body"]
             elif post_type == "link":
                 thread.link = data["link"]
-
+                thread.link_preview_img = get_url_link_thumbnail(
+                    thread, thread.link
+                )
+                thread.save()
             thread.save()
             return redirect("subreddit", subreddit_name)
     else:

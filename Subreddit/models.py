@@ -4,7 +4,9 @@ from RedditUser.models import RedditUser
 # Subreddit(ID, name, description, sidebar_content, created_at, subscribers, moderators,
 class Subreddit(models.Model):
     name = models.CharField("Name", max_length=50, unique=True)
-    description = models.CharField("Description", max_length=250)
+    description = models.CharField(
+        "Description", max_length=250, blank=True, null=True
+    )
     sidebar_content = models.CharField(
         "Sidebar Content", max_length=250, blank=True, null=True
     )

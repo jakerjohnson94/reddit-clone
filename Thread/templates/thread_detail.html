@@ -2,6 +2,19 @@
   <div class="card-image center center-align valign-wrapper vote-wrapper">
     {% include 'thread_vote_arrows.html' %}
   </div>
+
+  {% if thread.is_link_post %}
+
+  <div class="card-image valign-wrapper">
+    <a href="{{ thread.link }}"
+      ><div
+        class="link-preview-img"
+        style="background-image: url('{{ thread.link_preview_img.url }}')"
+      ></div
+    ></a>
+  </div>
+  {% endif %}
+
   <div class="card-stacked">
     <div class="card-content">
       <h5>{{ thread.title | title }}</h5>

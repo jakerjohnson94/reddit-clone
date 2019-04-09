@@ -3,13 +3,13 @@ body {
   background-color: #d7d7d7;
   /* font-weight: bold; */
 }
-h1,
+/* h1,
 h2,
 h3,
 h4,
 h5 {
   font-weight: bold;
-}
+} */
 button,
 .btn,
 .btn-flat {
@@ -36,6 +36,12 @@ a {
 .comment-title {
   font-size: 18 !important;
 }
-/* .vote-wrapper{
-  padding-left: .5em
-} */
+.link-preview-img {
+  background-size: cover;
+  width: 200px;
+  height: 140px;
+}
+
+.hidden {
+  visibility: none;
+}
