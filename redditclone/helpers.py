@@ -30,7 +30,7 @@ def get_url_link_thumbnail(post, url):
     driver = webdriver.PhantomJS()
     driver.set_window_size(100, 100)  # set the window size that you need
     driver.get(url)
-    url_name = urllib.parse.quote_plus(url)
+    url_name = urllib.parse.quote_plus(url + str(timezone.now()))
     img_path = f"{MEDIA_ROOT}/{url_name}.png"
     driver.save_screenshot(img_path)
     return f"{url_name}.png"

@@ -3,10 +3,17 @@
 <div class="container">
   <div class="card-panel">
     <h2>New {{ post_type | title }} Post</h2>
-    <form class="form" id="form" method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button class="btn grey" id="btn" onclick="changeClass()" type="submit">Post</button>
+    <form class="form" method="post">
+      <div class="valign-wrapper">
+        <div class="progress" id="loader" style="visibility:hidden">
+          <div class="indeterminate"></div>
+        </div>
+      </div>
+      <div id="form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn grey" id="btn" onclick="changeClass()" type="submit">Post</button>
+      </div>
     </form>
   </div>
 </div>
@@ -14,5 +21,6 @@
 <script type="text/javascript">
   function changeClass() {
     document.getElementById('form').style.visibility = 'hidden';
+    document.getElementById('loader').style.visibility = 'visible';
   }
 </script>
