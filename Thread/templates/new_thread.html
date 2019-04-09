@@ -1,11 +1,18 @@
 {% include 'head.html' %} {% include 'header.html' %}
+
 <div class="container">
   <div class="card-panel">
     <h2>New {{ post_type | title }} Post</h2>
-    <form class="form" method="post">
+    <form class="form" id="form" method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <button class="btn grey" type="submit">Post</button>
+      <button class="btn grey" id="btn" onclick="changeClass()" type="submit">Post</button>
     </form>
   </div>
 </div>
+
+<script type="text/javascript">
+  function changeClass() {
+    document.getElementById('form').style.visibility = 'hidden';
+  }
+</script>

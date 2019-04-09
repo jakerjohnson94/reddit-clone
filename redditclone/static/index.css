@@ -41,3 +41,7 @@ a {
   width: 200px;
   height: 140px;
 }
+
+.hidden {
+  visibility: none;
+}

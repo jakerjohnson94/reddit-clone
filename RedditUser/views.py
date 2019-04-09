@@ -1,6 +1,8 @@
 from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib import messages
+
+# importing with different name so we don't have conflicts with my lazy naming
+from django.contrib import messages as alert_messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.shortcuts import render, get_object_or_404, redirect
@@ -44,12 +46,14 @@ def create_user_view(request):
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            email = form.cleaned_data.get('email')
-            user = User.objects.create_user(username=username, email=email, password=password) # noqa
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password1")
+            email = form.cleaned_data.get("email")
+            user = User.objects.create_user(
+                username=username, email=email, password=password
+            )  # noqa
             RedditUser.objects.create(user=user)
-            messages.success(request, f'Account created for {username}!')
+            alert_messages.success(request, f"Account created for {username}!")
             return redirect("/")
     else:
         form = UserRegisterForm()
@@ -59,15 +63,17 @@ def create_user_view(request):
 
 @login_required
 def change_password(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, 'Your password was successfully updated!') # noqa
-            return redirect('change_password')
+            alert_messages.success(
+                request, "Your password was successfully updated!"
+            )  # noqa
+            return redirect("change_password")
         else:
-            messages.error(request, 'Please correct the error below.')
+            alert_messages.error(request, "Please correct the error below.")
     else:
         form = PasswordChangeForm(request.user)
-    return render(request, 'change_password.html', {'form': form})
+    return render(request, "change_password.html", {"form": form})

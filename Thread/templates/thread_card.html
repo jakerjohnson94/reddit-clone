@@ -24,7 +24,7 @@
       </p>
       <p class="card-body">
         {% if thread.is_link_post %}
-        <a href="{{ thread.link }}">{{ thread.link }}</a>
+        <a href="{{ thread.link }}">{{ thread.link|truncatechars:40  }}</a>
 
         {% else %}
         {{ thread.body }}

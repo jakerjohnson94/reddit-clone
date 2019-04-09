@@ -5,7 +5,7 @@
   <ul class="collection">
     {% for subreddit in subreddits %}
     <li class="collection-item">
-      <a href="{% url 'subreddit' subreddit.name %}"> r/{{ subreddit.name | title }}/ </a>
+      <a href="{% url 'subreddit' subreddit.name %}"> r/{{ subreddit.name }}/ </a>
     </li>
     {% endfor %}
   </ul>

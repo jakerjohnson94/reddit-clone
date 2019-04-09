@@ -5,16 +5,10 @@
       <li><a class="white-text" href="{% url 'allsubs' %}">All Subreddits</a></li>
       {% if user.is_authenticated %}
       <li>
-        {% if user %} <a href="{% url 'change_password' %}">Change Password</a> </li>
-        {% else %} 
-        <p></p>
-        {% endif %}
-      <li>
-        {% if user %} <a class="white-text" href="{% url 'logout' %}">Logout</a>
-        {% else %}
-        <a class="white-text" href="{% url 'signup' %}">Signup</a>
-        {% endif %}
+        <a href="{% url 'change_password' %}">Change Password</a>
       </li>
+
+      <li><a class="white-text" href="{% url 'logout' %}">Logout</a></li>
       {% else %}
       <li><a class="white-text" href="{% url 'login' %}">Login</a></li>
       {% endif %}
