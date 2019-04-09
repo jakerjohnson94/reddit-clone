@@ -6,11 +6,13 @@ from Thread.models import Thread
 from ThreadComment.models import ThreadComment
 from RedditUser.models import RedditUser
 from Subreddit.models import Subreddit
+from Message.models import Message
 from .helpers import flag_user_thread_votes
 
 
 def homepage(request):
     html = "index.html"
+    notifications = []
     if request.user.is_authenticated:
         subscribed_subreddits = request.user.reddituser.subscribers.all()
         threads = Thread.objects.filter(
@@ -18,10 +20,14 @@ def homepage(request):
         ).order_by("-score")[:25]
 
         flag_user_thread_votes(threads, request)
+
+        notifications = Message.objects.filter(
+            notification=request.user.reddituser
+        )
     else:
         threads = Thread.objects.all().order_by("-score")[:25]
     if not threads.exists():
         threads = None
-    data = {"threads": threads}
+    data = {"threads": threads, "notifications": len(notifications)}
     return render(request, html, data)
 

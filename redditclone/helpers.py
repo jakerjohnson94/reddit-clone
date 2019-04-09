@@ -34,4 +34,3 @@ def get_url_link_thumbnail(post, url):
     img_path = f"{MEDIA_ROOT}/{url_name}.png"
     driver.save_screenshot(img_path)
     return f"{url_name}.png"
-

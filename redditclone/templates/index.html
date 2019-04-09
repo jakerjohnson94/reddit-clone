@@ -1,10 +1,17 @@
 {% include 'head.html' %} {% include 'header.html' %}
 <div class="container">
-  <h3>{{ user.username | title }}</h3>
+  <div class="row">
+    <h3>{{ user.username | title }}</h3>
+    <a href="{%  url 'all_messages' %}">
+      <button class="btn grey left">
+        Messages
+      </button>
+    </a>
 
-  {% if has_upvoted %}
-  <h2>VOTED</h2>
-  {% endif %}
+    {% if notifications != 0 %}
+    <span class="new badge red left">{{ notifications }}</span>
+    {% endif %}
+  </div>
 
   <div class="divider"></div>
   <div class="row">

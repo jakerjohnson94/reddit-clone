@@ -1,0 +1,25 @@
+{% include 'head.html' %} {% include 'header.html' %}
+<div class="container">
+  <h3>{{ message_thread.title }}</h3>
+  <p>
+    <em>
+      {% for user in message_thread.users.all %}
+      {{ user.user.username }}
+      {% endfor %}
+    </em>
+  </p>
+
+  {% for message in messages %}
+  <div class="card-panel">
+    <h5>{{ message.sender.user.username }}</h5>
+    <p class="grey-text">{{ message.created_at }}</p>
+    <p>{{ message.body }}</p>
+  </div>
+  {% endfor %}
+
+  <a href="{% url 'reply_to_thread' message_thread.id %}">
+    <button class="btn grey">
+      Reply
+    </button>
+  </a>
+</div>
