@@ -12,9 +12,20 @@
       <span class="new badge red left" style="margin-right: 1em"></span>
       {% endif %}
 
-      <a href="{% url 'message_thread_detail' thread.id %}">
-        {{ thread.title }}
-      </a>
+      <p>
+        <a href="{% url 'message_thread_detail' thread.id %}">
+          {{ thread.title }}
+        </a>
+      </p>
+      <p>
+        {% for user in thread.users.all %} {% if user.user.username != request.user.username %}
+
+        <em>{{ user.user.username }},</em>
+        {% else %} <em>you </em>{% endif %} {% endfor %}
+      </p>
+      <p class="grey-text">
+        {{ thread.created_at }}
+      </p>
     </li>
 
     {% endfor %}

@@ -8,6 +8,7 @@ from MessageThread.models import MessageThread
 from Message.models import Message
 
 
+@login_required
 def thread_list_view(request):
     reddit_user = request.user.reddituser
     message_threads = MessageThread.objects.filter(users=reddit_user)
@@ -20,6 +21,7 @@ def thread_list_view(request):
     return render(request, html, data)
 
 
+@login_required
 def thread_detail_view(request, thread_id):
     reddit_user = request.user.reddituser
     message_thread = get_object_or_404(MessageThread, pk=thread_id)
@@ -34,6 +36,7 @@ def thread_detail_view(request, thread_id):
     return render(request, html, data)
 
 
+@login_required
 def new_message_thread_select_view(request):
     form = None
     if request.method == "POST":

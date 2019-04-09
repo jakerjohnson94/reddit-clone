@@ -16,10 +16,16 @@
     <p>{{ message.body }}</p>
   </div>
   {% endfor %}
-
-  <a href="{% url 'reply_to_thread' message_thread.id %}">
-    <button class="btn grey">
-      Reply
-    </button>
-  </a>
+  <p>
+    <a href="{% url 'reply_to_thread' message_thread.id %}">
+      <button class="btn grey">
+        Reply
+      </button>
+    </a>
+  </p>
+  <p>
+    <a href="{% url 'all_messages' %}">
+      <button class="btn grey">Back</button>
+    </a>
+  </p>
 </div>

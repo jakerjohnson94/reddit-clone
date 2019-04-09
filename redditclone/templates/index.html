@@ -1,6 +1,8 @@
 {% include 'head.html' %} {% include 'header.html' %}
 <div class="container">
   <div class="row">
+    {% if request.user.is_authenticated %}
+
     <h3>{{ user.username | title }}</h3>
     <a href="{%  url 'all_messages' %}">
       <button class="btn grey left">
@@ -10,7 +12,7 @@
 
     {% if notifications != 0 %}
     <span class="new badge red left">{{ notifications }}</span>
-    {% endif %}
+    {% endif %} {% endif %}
   </div>
 
   <div class="divider"></div>
