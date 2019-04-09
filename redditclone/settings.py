@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 
-# TEMPLATE_DIRS = (os.path.join(SETTINGS_PATH, "templates"),)
+TEMPLATE_DIRS = (os.path.join(SETTINGS_PATH, "templates"),)
 
 
 # Quick-start development settings - unsuitable for production
@@ -76,7 +76,6 @@ TEMPLATES = [
         },
     }
 ]
-TEMPLATE_DIRS = (os.path.join(SETTINGS_PATH, "templates"),)
 
 WSGI_APPLICATION = "redditclone.wsgi.application"
 
@@ -96,14 +95,10 @@ DATABASES = {
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"}, # noqa
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"
-    },
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"}, # noqa
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"}, # noqa
 ]
 
 

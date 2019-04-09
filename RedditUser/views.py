@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, get_user_data
 from django.contrib.auth.decorators import login_required
 from Thread.models import Thread
 from ThreadComment.models import ThreadComment
@@ -71,3 +71,10 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'change_password.html', {'form': form})
+
+
+def user_detail(request, user_id):
+    html = "user_detail.html"
+    user = get_object_or_404(User, pk=user_id)
+    data = get_user_data(user)
+    return render(request, html, data)
