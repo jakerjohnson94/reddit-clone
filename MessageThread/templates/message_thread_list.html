@@ -1,0 +1,33 @@
+{% include 'head.html' %} {% include 'header.html' %}
+<div class="container">
+  <h3>All Messages:</h3>
+  <a href="{% url 'message_thread_select' %}">
+    <button class="btn grey">New Message</button>
+  </a>
+  <ul class="collection">
+    {% for thread in message_threads %}
+
+    <li class="collection-item">
+      {% if thread.active_notification %}
+      <span class="new badge red left" style="margin-right: 1em"></span>
+      {% endif %}
+
+      <p>
+        <a href="{% url 'message_thread_detail' thread.id %}">
+          {{ thread.title }}
+        </a>
+      </p>
+      <p>
+        {% for user in thread.users.all %} {% if user.user.username != request.user.username %}
+
+        <em>{{ user.user.username }},</em>
+        {% else %} <em>you </em>{% endif %} {% endfor %}
+      </p>
+      <p class="grey-text">
+        {{ thread.created_at }}
+      </p>
+    </li>
+
+    {% endfor %}
+  </ul>
+</div>

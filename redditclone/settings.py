@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "Subreddit",
     "Thread",
     "ThreadComment",
+    "Message",
+    "MessageThread",
 ]
 
 MIDDLEWARE = [

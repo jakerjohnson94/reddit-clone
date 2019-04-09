@@ -1,0 +1,11 @@
+{% include 'head.html' %} {% include 'header.html' %}
+<div class="container">
+  <div class="card-panel">
+    <h2>Compose a Message</h2>
+    <form class="form " method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn grey" type="submit">Create</button>
+    </form>
+  </div>
+</div>
