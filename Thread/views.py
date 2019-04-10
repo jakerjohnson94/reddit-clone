@@ -21,7 +21,7 @@ def thread_page_view(request, thread_id):
     html = "thread_page.html"
     thread = get_object_or_404(Thread, pk=thread_id)
     comments = ThreadComment.objects.filter(post_thread=thread).order_by(
-        "-score"
+        "-score", "-created_at"
     )
     for comment in comments:
         flag_own_post(comment, request.user)
@@ -78,6 +78,7 @@ def new_thread_view(request, subreddit_name, post_type):
                     thread, thread.link
                 )
                 thread.save()
+            set_post_score(thread)
             thread.save()
             return redirect("subreddit", subreddit_name)
     else:
@@ -119,4 +120,6 @@ def thread_vote(request, thread_id, vote_type):
             thread.downvoters.add(reddit_user)
     thread.set_score()
     thread.save()
-    return redirect("/")
+    next = request.GET.get('next', '/')
+    return redirect(next)
+

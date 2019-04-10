@@ -25,7 +25,7 @@ def list_all_view(request):
 def home_view(request, subreddit_name):
     html = "subreddit_homepage.html"
     subreddit = get_object_or_404(Subreddit, name=subreddit_name)
-    threads = Thread.objects.filter(subreddit=subreddit).order_by("-score")
+    threads = Thread.objects.filter(subreddit=subreddit).order_by("-score","-created_at")
     is_moderator = False
     is_subscriber = False
     if request.user.is_authenticated:

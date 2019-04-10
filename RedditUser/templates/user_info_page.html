@@ -36,23 +36,34 @@
     </div>
   </div>
 
+{% if moderators is not None %}
+  
+
 <div class="container">
-    <div class="card-panel">
-      <h5>Moderated Subreddits</h5>
-      <ul class="collection">
-        {% for mod in moderators.all %}
-        <li class="collection-item">
-          <a href="{% url 'subreddit' mod.name %}">
-            {{ mod.name }}
-          </a>
-        </li>
-        {% endfor %}
-      </div>
-    </ul>
-  </div>
+  <div class="card-panel">
+    <h5>Moderated Subreddits</h5>
+    <ul class="collection">
+      {% for mod in moderators.all %}
+      <li class="collection-item">
+        <a href="{% url 'subreddit' mod.name %}">
+          {{ mod.name }}
+        </a>
+      </li>
+      {% endfor %}
+    </div>
+  </ul>
+</div>
+{% endif %}
 </div>
 
 <div class="container">
-    <h4>Top Threads</h4>
-    {% for thread in threads %} {% include 'thread_card.html' %} {% endfor %}
+  <div class="card-panel">
+    
+    <h5>Top Threads</h5>
+
+
+      {% for thread in threads %}
+      {% include 'thread_card.html' %}{% endfor %}
+
+  </div>
   </div>
