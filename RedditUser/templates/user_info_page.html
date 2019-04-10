@@ -6,10 +6,9 @@
         <h3 >
           {{ user.user.username|title }}
         </h3>
-        
+        <p class="grey-text">Member Since {{user.user.date_joined|date:'M d, Y'}}</p>
         {% if user.user.username == request.user.username %}
         <p>
-
           <a href="{% url 'change_password' %}" >Change Password</a>
         </p>
         <p>
