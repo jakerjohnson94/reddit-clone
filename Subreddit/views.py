@@ -15,36 +15,39 @@ from django.http import HttpResponseRedirect
 from redditclone.helpers import flag_user_thread_votes
 
 
-def list_all_view(request):
+class ListAll(View):
     html = "subreddit_list.html"
-    subreddits = Subreddit.objects.all().order_by("name")
-    data = {"subreddits": subreddits}
-    return render(request, html, data)
+    def get(self, request):
+        subreddits = Subreddit.objects.all().order_by("name")
+        data = {"subreddits": subreddits}
+        return render(request, self.html, data)
 
 
-def home_view(request, subreddit_name):
+class Home(View):
     html = "subreddit_homepage.html"
-    subreddit = get_object_or_404(Subreddit, name=subreddit_name)
-    threads = Thread.objects.filter(subreddit=subreddit).order_by("-score","-created_at")
-    is_moderator = False
-    is_subscriber = False
-    if request.user.is_authenticated:
-        for thread in threads:
-            flag_user_thread_votes(thread, request)
-        if subreddit.moderators.filter(user=request.user).exists():
-            is_moderator = True
-        if subreddit.subscribers.filter(user=request.user).exists():
-            is_subscriber = True
+    def get(self, request, subreddit_name):
+        subreddit = get_object_or_404(Subreddit, name=subreddit_name)
+        threads = Thread.objects.filter(subreddit=subreddit).order_by("-score","-created_at")
+        is_moderator = False
+        is_subscriber = False
+        if request.user.is_authenticated:
+            for thread in threads:
+                flag_user_thread_votes(thread, request)
+            if subreddit.moderators.filter(user=request.user).exists():
+                is_moderator = True
+            if subreddit.subscribers.filter(user=request.user).exists():
+                is_subscriber = True
 
-    data = {
-        "subreddit": subreddit,
-        "threads": threads,
-        "subscribers": subreddit.subscribers.all(),
-        "moderators": subreddit.moderators.all(),
-        "is_subscriber": is_subscriber,
-        "is_moderator": is_moderator,
-    }
-    return render(request, html, data)
+        data = {
+            "subreddit": subreddit,
+            "threads": threads,
+            "subscribers": subreddit.subscribers.all(),
+            "moderators": subreddit.moderators.all(),
+            "is_subscriber": is_subscriber,
+            "is_moderator": is_moderator,
+        }
+        return render(request, self.html, data)
+
 
 
 @login_required

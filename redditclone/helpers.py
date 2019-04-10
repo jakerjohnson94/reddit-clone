@@ -18,7 +18,7 @@ def set_post_score(post):
         post.save()
         return post
     except Exception as e:
-        print("Failed to set score")
+        print(e)
 
 
 def flag_own_post(post, user):
