@@ -18,6 +18,7 @@ def set_post_score(post):
         post.save()
         return post
     except Exception as e:
+        print(e.messages)
         print("Failed to set score")
 
 
