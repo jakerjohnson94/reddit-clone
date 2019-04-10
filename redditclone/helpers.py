@@ -1,7 +1,7 @@
 from selenium import webdriver
 from django.utils import timezone
 from .settings import MEDIA_ROOT
-from pprint import pprint
+import os
 import urllib
 
 
@@ -30,6 +30,8 @@ def get_url_link_thumbnail(post, url):
     driver.set_window_size(100, 100)  # set the window size that you need
     driver.get(url)
     url_name = urllib.parse.quote_plus(url + str(timezone.now()))
+    if not os.path.exists(MEDIA_ROOT):
+        os.makedirs(MEDIA_ROOT)
     img_path = f"{MEDIA_ROOT}/{url_name}.png"
     driver.save_screenshot(img_path)
     return f"{url_name}.png"

@@ -17,23 +17,24 @@
 
   <div class="card-stacked">
     <div class="card-content">
-      <h5><a href="{% url 'threaddetail' thread.id %}"> {{ thread.title | title }}</a></h5>
+      <h5>
+        <a href="{% url 'threaddetail' thread.id %}"> {{ thread.title | title }}</a>
+      </h5>
       <p class="grey-text">
-        {{ thread.created_at }} by <em>{{ thread.sender.user.username | title }}</em>
-        in <a href="{% url 'subreddit' thread.subreddit.name %}"> {{thread.subreddit.name}}</a>
+        {{ thread.created_at }} by
+        <a href="{% url 'user_info' thread.sender.user.username %}">
+          <em>{{ thread.sender.user.username | title }}</em>
+        </a>
+        in <a href="{% url 'subreddit' thread.subreddit.name %}"> {{ thread.subreddit.name }}</a>
       </p>
       <p class="card-body">
         {% if thread.is_link_post %}
-        <a href="{{ thread.link }}">{{ thread.link|truncatechars:40  }}</a>
+        <a href="{{ thread.link }}">{{ thread.link | truncatechars:40 }}</a>
 
         {% else %}
         {{ thread.body }}
         {% endif %}
       </p>
     </div>
-
   </div>
 </div>
-
-
-          

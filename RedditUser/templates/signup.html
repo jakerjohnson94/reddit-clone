@@ -1,18 +1,24 @@
 {% include 'head.html' %} {% block content %}
 <div class="container">
-<h4>User Signup</h4>
+  <div class="card-panel">
+    <h3>User Signup</h3>
+    
     <form class="form" method="POST">
       {% csrf_token %}
-
+      
       {{ form }}
+      
+      <p>
 
-      <input type="submit" value="Submit" />
+        <input class="btn grey"type="submit" value="Submit" />
+      </p>
     </form>
+      <p class="center">
     <div class="row">
-      <small class="text-muted">
-        Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Log In Here!</a>
-      </small>
+        Already Have An Account? <a href="{% url 'login' %}">Log In Here!</a>
+      </p>
     </div>
   </div>
   {% endblock %}
+</div>
 </div>
