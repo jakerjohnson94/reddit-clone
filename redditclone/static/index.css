@@ -45,3 +45,8 @@ a {
 .hidden {
   visibility: none;
 }
+
+.logo {
+  height: 50px !important;
+  width: auto;
+}
