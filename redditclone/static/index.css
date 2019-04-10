@@ -47,6 +47,5 @@ a {
 }
 
 .logo {
-  height: 50px !important;
-  width: auto;
+  padding-right: 0.5em;
 }
