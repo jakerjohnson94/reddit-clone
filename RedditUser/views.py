@@ -77,3 +77,19 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, "change_password.html", {"form": form})
+
+
+def user_info_view(request, user_username):
+    user = get_object_or_404(RedditUser, user__username=user_username)
+    threads = Thread.objects.filter(sender=user).order_by("-score")[:5]
+    subscriptions = user.subscribers
+    moderators = user.moderators
+    html = "user_info_page.html"
+    data = {
+        "user": user,
+        "threads": threads,
+        "subscriptions": subscriptions,
+        "moderators": moderators,
+    }
+    return render(request, html, data)
+
