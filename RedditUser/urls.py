@@ -10,8 +10,3 @@ urlpatterns = [
     path("user/<str:user_username>", user_info_view, name="user_info"),
 ]
 
-
-# endpoints for mvp:
-# user/<str:username>
-# user/edit
-# user/subscriptions
