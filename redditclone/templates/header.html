@@ -3,14 +3,17 @@
     <a href="{% url 'homepage' %}" class="brand-logo">Shitty Reddit</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li><a class="white-text" href="{% url 'allsubs' %}">All Subreddits</a></li>
-      {% if user.is_authenticated %}
+      {% if request.user.is_authenticated %}
       <li>
-        <a href="{% url 'change_password' %}">Change Password</a>
+        <a href="{% url 'user_info' request.user.username %}">
+          {{ request.user.username | title }}
+        </a>
       </li>
 
       <li><a class="white-text" href="{% url 'logout' %}">Logout</a></li>
       {% else %}
       <li><a class="white-text" href="{% url 'login' %}">Login</a></li>
+      <li><a class="white-text" href="{% url 'signup' %}">Signup</a></li>
       {% endif %}
     </ul>
   </div>

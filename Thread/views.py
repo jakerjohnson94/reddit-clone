@@ -29,8 +29,9 @@ def thread_page_view(request, thread_id):
     is_moderator = False
     is_own_post = False
     if request.user.is_authenticated:
-        flag_user_thread_votes(comments, request)
-        flag_user_thread_votes([thread], request)
+        for comment in comments:
+            flag_user_thread_votes(comment, request)
+        flag_user_thread_votes(thread, request)
         is_moderator = thread.subreddit.moderators.filter(
             user=request.user
         ).exists()

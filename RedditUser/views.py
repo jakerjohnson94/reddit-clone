@@ -24,8 +24,9 @@ def login_view(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
+            username = data["username"].lower()
             user = authenticate(
-                username=data["username"], password=data["password"]
+                username=username, password=data["password"]
             )
             if user is not None:
                 login(request, user)
@@ -47,6 +48,7 @@ def create_user_view(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get("username")
+            username = username.lower()
             password = form.cleaned_data.get("password1")
             email = form.cleaned_data.get("email")
             user = User.objects.create_user(
@@ -54,7 +56,7 @@ def create_user_view(request):
             )  # noqa
             RedditUser.objects.create(user=user)
             alert_messages.success(request, f"Account created for {username}!")
-            return redirect("/")
+            return redirect("login")
     else:
         form = UserRegisterForm()
     html = "signup.html"
@@ -77,3 +79,19 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, "change_password.html", {"form": form})
+
+
+def user_info_view(request, user_username):
+    user = get_object_or_404(RedditUser, user__username=user_username)
+    threads = Thread.objects.filter(sender=user).order_by("-score")[:5]
+    subscriptions = user.subscribers
+    moderators = user.moderators
+    html = "user_info_page.html"
+    data = {
+        "user": user,
+        "threads": threads,
+        "subscriptions": subscriptions,
+        "moderators": moderators,
+    }
+    return render(request, html, data)
+

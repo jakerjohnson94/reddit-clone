@@ -29,7 +29,8 @@ def home_view(request, subreddit_name):
     is_moderator = False
     is_subscriber = False
     if request.user.is_authenticated:
-        flag_user_thread_votes(threads, request)
+        for thread in threads:
+            flag_user_thread_votes(thread, request)
         if subreddit.moderators.filter(user=request.user).exists():
             is_moderator = True
         if subreddit.subscribers.filter(user=request.user).exists():

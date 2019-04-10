@@ -42,7 +42,7 @@ def new_message_thread_select_view(request):
     if request.method == "POST":
         form = MessageThreadUserSelectionForm(request.POST)
         if form.is_valid():
-            users = form.cleaned_data["users"]
+            users = form.cleaned_data["user"]
             title = form.cleaned_data["title"]
             new_thread = MessageThread(title=title)
             new_thread.save()

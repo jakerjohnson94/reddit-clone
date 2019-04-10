@@ -5,13 +5,8 @@ from RedditUser.models import RedditUser
 
 
 class MessageThreadUserSelectionForm(forms.Form):
-    CHOICES = []
-    for user in RedditUser.objects.all():
-        CHOICES.append((user.id, user.user.username))
     title = forms.CharField(max_length=50, required=True)
-    users = forms.ChoiceField(
-        choices=CHOICES, widget=forms.Select(attrs={"class": "browser-default"})
-    )
+    user = forms.ModelChoiceField(queryset=RedditUser.objects.all(), widget=forms.Select(attrs={'class':'browser-default'}))
 
     class Meta:
         model = MessageThread
