@@ -5,8 +5,7 @@ from pprint import pprint
 import urllib
 
 
-def flag_user_thread_votes(threads, request):
-    for thread in threads:
+def flag_user_thread_votes(thread, request):
         if thread.upvoters.filter(user=request.user).exists():
             thread.has_upvoted = True
         elif thread.downvoters.filter(user=request.user).exists():

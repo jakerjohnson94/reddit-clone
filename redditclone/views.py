@@ -18,8 +18,8 @@ def homepage(request):
         threads = Thread.objects.filter(
             subreddit__in=subscribed_subreddits
         ).order_by("-score")[:25]
-
-        flag_user_thread_votes(threads, request)
+        for thread in threads:
+            flag_user_thread_votes(thread, request)
 
         notifications = Message.objects.filter(
             notification=request.user.reddituser
