@@ -76,15 +76,4 @@ def change_password(request):
             alert_messages.error(request, "Please correct the error below.")
     else:
         form = PasswordChangeForm(request.user)
-<<<<<<< HEAD
-    return render(request, 'change_password.html', {'form': form})
-
-
-def user_detail(request, user_id):
-    html = "user_detail.html"
-    user = get_object_or_404(User, pk=user_id)
-    data = get_user_data(user)
-    return render(request, html, data)
-=======
     return render(request, "change_password.html", {"form": form})
->>>>>>> cc3bee6d4cbf0aa3b16d09eb076295f8b4c4a128
