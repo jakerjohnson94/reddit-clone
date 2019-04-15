@@ -1,7 +1,7 @@
 <div class="center-align" style=" width: 3em;">
   <div class="row">
     {% if request.user.is_authenticated %}
-    <a href="{% url 'threadVote' thread.id 1 %}">
+    <a href="{% url 'threadVote' thread.id 1 %}?next={{ request.path | urlencode }}">
       {% endif %} {% if thread.has_upvoted %}
       <i class="material-icons orange-text ">arrow_drop_up</i>
       {% else %}
@@ -17,7 +17,7 @@
 
   <div class="row">
     {% if request.user.is_authenticated %}
-    <a href="{% url 'threadVote' thread.id 2 %}">
+    <a href="{% url 'threadVote' thread.id 2 %}?next={{ request.path | urlencode }}">
       {% endif %} {% if thread.has_downvoted %}
       <i class="material-icons blue-text">arrow_drop_down</i>
       {% else %}

@@ -17,7 +17,7 @@ def homepage(request):
         subscribed_subreddits = request.user.reddituser.subscribers.all()
         threads = Thread.objects.filter(
             subreddit__in=subscribed_subreddits
-        ).order_by("-score")[:25]
+        ).order_by("-score", "-created_at")[:25]
         for thread in threads:
             flag_user_thread_votes(thread, request)
 
@@ -25,7 +25,7 @@ def homepage(request):
             notification=request.user.reddituser
         )
     else:
-        threads = Thread.objects.all().order_by("-score")[:25]
+        threads = Thread.objects.all().order_by("-score", "-created_at")[:25]
     if not threads.exists():
         threads = None
     data = {"threads": threads, "notifications": len(notifications)}

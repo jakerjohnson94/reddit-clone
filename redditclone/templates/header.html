@@ -1,6 +1,12 @@
 <nav>
   <div class="nav-wrapper nav-color">
-    <a href="{% url 'homepage' %}" class="brand-logo">Shitty Reddit</a>
+    {% load static %}
+    <div class="brand-logo ">
+      <a href="{% url 'homepage' %}" class="valign-wrapper">
+        <img src="{% static 'sreddit_logo.png' %}" class="logo" alt="" />
+        Shitty Reddit</a
+      >
+    </div>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li><a class="white-text" href="{% url 'allsubs' %}">All Subreddits</a></li>
       {% if request.user.is_authenticated %}

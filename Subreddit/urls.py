@@ -1,18 +1,19 @@
 from django.contrib import admin
 from django.urls import path
 from .views import (
-    home_view,
-    list_all_view,
+
+    Home,
     create_new_view,
     subscribe,
     unsubscribe,
+    ListAll
 )
 
 
 urlpatterns = [
-    path("r/all", list_all_view, name="allsubs"),
+    path("r/all", ListAll.as_view(), name="allsubs"),
     path("r/create", create_new_view, name="subredditCreate"),
-    path("r/<str:subreddit_name>", home_view, name="subreddit"),
+    path("r/<str:subreddit_name>", Home.as_view(), name="subreddit"),
     path("r/<str:subreddit_name>/subscribe", subscribe, name="subscribe"),
     path("r/<str:subreddit_name>/unsubscribe", unsubscribe, name="unsubscribe"),
 ]

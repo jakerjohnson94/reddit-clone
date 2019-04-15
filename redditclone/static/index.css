@@ -45,3 +45,7 @@ a {
 .hidden {
   visibility: none;
 }
+
+.logo {
+  padding-right: 0.5em;
+}
