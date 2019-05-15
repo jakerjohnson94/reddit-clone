@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages as alert_messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
-from django.shortcuts import render, get_object_or_404, redirect, get_user_data
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from Thread.models import Thread
 from ThreadComment.models import ThreadComment
@@ -95,5 +95,3 @@ class UserInfo(View):
                 "moderators": moderators,
             }
             return render(request, html, data)
-
-

@@ -35,3 +35,6 @@ urlpatterns += thread_comment_urls
 urlpatterns += message_urls
 urlpatterns += message_thread_urls
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'redditclone.views.not_found'
+handler500 = 'redditclone.views.server_error'

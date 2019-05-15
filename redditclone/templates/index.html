@@ -20,8 +20,11 @@
     <h5>Top Posts:</h5>
   </div>
 
-  {% if threads is not None %} {% for thread in threads %} {% include 'thread_card.html' %}
-  {%endfor%} {% else %}
+  {% if threads is not None %}
+  {% for thread in threads %} 
+  {% include 'thread_card.html' %}
+  {%endfor%} 
+  {% else %}
   <div class="card-panel">
     <p>
       Nothing Here... Try
